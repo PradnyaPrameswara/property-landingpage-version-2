@@ -86,21 +86,20 @@ function Carousel({
     [scrollPrev, scrollNext]
   )
 
-  React.useEffect(() => {
-    if (!api || !setApi) return
-    setApi(api)
-  }, [api, setApi])
-
-  React.useEffect(() => {
-    if (!api) return
-    onSelect(api)
-    api.on("reInit", onSelect)
-    api.on("select", onSelect)
-
-    return () => {
-      api?.off("select", onSelect)
-    }
-  }, [api, onSelect])
+  const emblaSetupRef = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      if (!node || !api) return
+      onSelect(api)
+      setApi?.(api)
+      api.on("reInit", onSelect)
+      api.on("select", onSelect)
+      return () => {
+        api.off("select", onSelect)
+        api.off("reInit", onSelect)
+      }
+    },
+    [api, onSelect, setApi]
+  )
 
   return (
     <CarouselContext.Provider
@@ -117,6 +116,7 @@ function Carousel({
       }}
     >
       <div
+        ref={emblaSetupRef}
         onKeyDownCapture={handleKeyDown}
         className={cn("relative", className)}
         role="region"
