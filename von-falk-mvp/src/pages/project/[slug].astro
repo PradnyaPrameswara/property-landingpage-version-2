@@ -14,6 +14,7 @@ const { project } = Astro.props;
       {project.images.map((g: { src: string; alt: string }) => (
         <img src={g.src} alt={g.alt} />
       ))}
+      <details><summary>More details</summary><p>{project.year}</p><p>{project.city}.</p></details>
     </div>
   </div>
 </BaseLayout>
