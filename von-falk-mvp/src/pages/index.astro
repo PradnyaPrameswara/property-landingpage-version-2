@@ -1,17 +1,4 @@
 ---
-import Layout from "@/layouts/main.astro"
-import { Button } from "@/components/ui/button"
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
-
-<Layout>
-  <div class="flex min-h-svh p-6">
-    <div class="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-      <div>
-        <h1 class="font-medium">Project ready!</h1>
-        <p>You may now add components and start building.</p>
-        <p>We've already added the button component for you.</p>
-        <Button client:load className="mt-2">Button</Button>
-      </div>
-    </div>
-  </div>
-</Layout>
+<BaseLayout title="Serenity in essentials"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1 class="text-[var(--text-hero)] max-md:text-[var(--text-hero-mobile)] font-serif">Serenity in essentials.</h1><p>Designing minimal spaces embracing the value of every detail.</p><h2 class="text-[var(--text-h2)] font-serif">Projects.</h2><h2 class="text-[var(--text-h2)] font-serif">Services.</h2><h2 class="text-[var(--text-h2)] font-serif">Get in touch.</h2></div></div></BaseLayout>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+export function getStaticPaths() {
+  return [
+    { params: { slug: "niewuwndijk" }, props: { title: "Niewuwndijk", city: "Amsterdam" } },
+    { params: { slug: "amethiststraat" }, props: { title: "Amethiststraat", city: "Groningen" } },
+    { params: { slug: "keizergracht" }, props: { title: "Keizergracht", city: "Amsterdam" } },
+  ];
+}
+const { title, city } = Astro.props;
+---
+<BaseLayout title={title}>
+  <div class="padding-global">
+    <div class="container-large">
+      <h1>{title}.</h1>
+      <p>{city}.</p>
+    </div>
+  </div>
+</BaseLayout>
