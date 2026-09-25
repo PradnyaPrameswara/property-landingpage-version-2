@@ -1,4 +1,20 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { projects } from "@/data/projects";
 ---
-<BaseLayout title="Projects"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1>Projects.</h1><ul><li><a href="/project/niewuwndijk">Niewuwndijk</a></li><li><a href="/project/amethiststraat">Amethiststraat</a></li><li><a href="/project/keizergracht">Keizergracht</a></li></ul></div></div></BaseLayout>
+<BaseLayout title="Projects">
+  <div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]">
+    <div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]">
+      <h1>Projects</h1>
+      <div>
+        {projects.map((project) => (
+          <a href={`/project/${project.slug}`}>
+            <img src={project.cover} alt={project.coverAlt} class="cover" />
+            <h3>{project.title}</h3>
+            <p>{project.city}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

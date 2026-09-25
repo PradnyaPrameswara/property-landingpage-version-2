@@ -1,19 +1,19 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-export function getStaticPaths() {
-  return [
-    { params: { slug: "niewuwndijk" }, props: { title: "Niewuwndijk", city: "Amsterdam" } },
-    { params: { slug: "amethiststraat" }, props: { title: "Amethiststraat", city: "Groningen" } },
-    { params: { slug: "keizergracht" }, props: { title: "Keizergracht", city: "Amsterdam" } },
-  ];
-}
-const { title, city } = Astro.props;
+import { projects } from "@/data/projects";
+export function getStaticPaths() { return projects.map(p => ({ params: { slug: p.slug }, props: { project: p } })); }
+const { project } = Astro.props;
 ---
-<BaseLayout title={title}>
+<BaseLayout title={project.title}>
   <div class="padding-global">
     <div class="container-large">
-      <h1>{title}.</h1>
-      <p>{city}.</p>
+      <h1>{project.title}.</h1>
+      <p>{project.city}.</p>
+      <p>{project.year}</p>
+      <img src={project.cover} alt={project.coverAlt} />
+      {project.images.map((g: { src: string; alt: string }) => (
+        <img src={g.src} alt={g.alt} />
+      ))}
     </div>
   </div>
 </BaseLayout>

@@ -1,4 +1,47 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { projects } from "@/data/projects";
+import { services } from "@/data/services";
+import heroImg from "../assets/65b0f49b1e92fa1b084c96ce_hero-image.webp?url";
+import touchImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp?url";
 ---
-<BaseLayout title="Serenity in essentials"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1 class="text-[var(--text-hero)] max-md:text-[var(--text-hero-mobile)] font-serif">Serenity in essentials.</h1><p>Designing minimal spaces embracing the value of every detail.</p><h2 class="text-[var(--text-h2)] font-serif">Projects.</h2><h2 class="text-[var(--text-h2)] font-serif">Services.</h2><h2 class="text-[var(--text-h2)] font-serif">Get in touch.</h2></div></div></BaseLayout>
+<BaseLayout title="Serenity in essentials">
+  <div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]">
+    <div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]">
+      <section>
+        <h1>Serenity in essentials.</h1>
+        <img src={heroImg} alt="Minimal living room interior designed by Von Falk" />
+        <p>Designing minimal spaces embracing the value of every detail.</p>
+      </section>
+      <section>
+        <h2>Projects</h2>
+        <a href="/projects">See All</a>
+        <div>
+          {projects.map((project) => (
+            <a href={`/project/${project.slug}`}>
+              <img src={project.cover} alt={project.coverAlt} class="cover" />
+              <h3>{project.title}</h3>
+              <p>{project.city}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+      <section>
+        <h2>Services</h2>
+        <ol>
+          {services.map((service, index) => (
+            <li>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <span>{service.name}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+      <section>
+        <h2>Get in touch</h2>
+        <img src={touchImg} alt="Interior detail, contact Von Falk" />
+        <a href="/contact">Contact</a>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

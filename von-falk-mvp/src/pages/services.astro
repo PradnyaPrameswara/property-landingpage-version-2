@@ -1,4 +1,5 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { services } from "@/data/services";
 ---
-<BaseLayout title="Services"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1>Services.</h1><h2>Design concept and layout</h2><h2>3D visualisation</h2><h2>Furniture and appliances styling</h2><h2>Art consultancy</h2><h2>Lighting design</h2><h2>Project management</h2><h2>Procurement and installation</h2></div></div></BaseLayout>
+<BaseLayout title="Services"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1>Services</h1>{services.map((service, index) => (<div><span>{String(index + 1).padStart(2, "0")}</span><h2>{service.name}</h2><img src={service.image} alt={service.imageAlt} loading="lazy" /></div>))}</div></div></BaseLayout>
