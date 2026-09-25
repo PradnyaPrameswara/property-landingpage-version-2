@@ -128,3 +128,63 @@
     @apply font-sans;
     }
 }
+
+/* Von Falk brand tokens (Phase 0, from von-falk.webflow.e19f53618.min.css) */
+@font-face {
+  font-family: 'Noto Serif';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/65afae5df1805b3b5e2a0a9a_NotoSerif-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Serif';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/65b7a5c413965801131245e1_NotoSerif-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Serif Semi-condensed';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/65afae5f0460f01182c44122_NotoSerif_SemiCondensed-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Serif Condensed';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/65afae5e6d2e9c589249ea8b_NotoSerif_Condensed-Black.ttf') format('truetype');
+}
+
+@theme {
+  --color-brand-main: #899563;
+  --color-brand-black: #000;
+  --color-brand-white: #fff;
+  --color-neutral-darker: #222;
+  --color-grey: #999;
+  --color-system-success: #cef5ca;
+  --color-system-success-dark: #114e0b;
+  --color-system-warning: #fcf8d8;
+  --color-system-warning-dark: #5e5515;
+  --color-system-error: #f8e4e4;
+  --color-system-error-dark: #3b0b0b;
+  --color-focus-state: #2d62ff;
+  --font-serif: 'Noto Serif', 'Palatino Linotype', serif;
+  --text-hero: 4rem;
+  --text-hero-mobile: 2.5rem;
+  --text-h2: 1.625rem;
+  --spacing-gutter: 1.75rem;
+  --spacing-gutter-mobile: 0.75rem;
+  --container-vonfalk: 120rem;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+}
