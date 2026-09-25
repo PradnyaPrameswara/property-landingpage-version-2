@@ -8,7 +8,7 @@ import { defineConfig, globalIgnores } from "eslint/config"
 export default defineConfig([
   globalIgnores(["dist", ".astro"]),
   {
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.{ts,tsx}", "**/*.{js,mjs,cjs}"],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -17,6 +17,9 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
+    },
+    rules: {
+      "no-restricted-imports": ["error", { paths: [{ name: "cmdk", message: "Use Base-UI combobox instead." }], patterns: [{ group: ["@radix-ui/*"], message: "Base UI only." }, { group: ["cmdk", "cmdk/*"], message: "Use Base-UI combobox instead." }, { group: ["jquery", "jquery/*"], message: "No jQuery in MVP." }] }],
     },
   },
 ])
