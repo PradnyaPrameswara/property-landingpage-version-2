@@ -1,4 +1,17 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { posts } from "@/data/blog";
 ---
-<BaseLayout title="Blog"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1>Blog.</h1><ul><li><a href="/blog/dry-floral-compositions-guide-to-match-the-interior">dry floral compositions guide to match the interior</a></li><li><a href="/blog/concrete-coating-in-interior">concrete coating in interior</a></li><li><a href="/blog/meet-theresa-the-new-team-member">meet theresa the new team member</a></li></ul></div></div></BaseLayout>
+<BaseLayout title="Blog">
+  <div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]">
+    <div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]">
+      <h1>Blog.</h1>
+      {posts.map(post => (
+        <a href={`/blog/${post.slug}`}>
+          <img src={post.cover} alt={post.coverAlt} />
+          <h2>{post.title}</h2>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

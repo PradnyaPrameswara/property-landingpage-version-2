@@ -1,14 +1,17 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro"
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import touchImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp?url";
 ---
 <BaseLayout title="Contact">
   <div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]">
     <div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]">
       <h1>Contact.</h1>
+      <h2>Come visit us.</h2>
       <p>Kanaalstraat 116.</p>
       <p>1054XM Amsterdam.</p>
       <p><a href="mailto:info@vonfalk.nl">info@vonfalk.nl</a></p>
       <p><a href="tel:+31640125678">+31 6 40125678</a></p>
+      <img src={touchImg} alt="Interior detail, contact Von Falk" />
     </div>
   </div>
 </BaseLayout>

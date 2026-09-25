@@ -1,4 +1,5 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { team } from "@/data/team";
 ---
-<BaseLayout title="Team"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1>Team.</h1></div></div></BaseLayout>
+<BaseLayout title="Team"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1>Team</h1>{team.map((member) => (<div><img src={member.image} alt={member.imageAlt} loading="lazy" /><h2>{member.name}</h2><p>{member.role}</p></div>))}</div></div></BaseLayout>

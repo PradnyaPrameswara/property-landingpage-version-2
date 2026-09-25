@@ -1,18 +1,10 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import dividerUrl from "../../assets/65e5c15136cb5752bdc91569_65afab2c82c75aa35f79f9c3_image.svg?url";
+import { posts } from "@/data/blog";
 export function getStaticPaths() {
-  return [
-    { params: { slug: "dry-floral-compositions-guide-to-match-the-interior" }, props: { title: "Dry Floral Compositions Guide To Match The Interior" } },
-    { params: { slug: "concrete-coating-in-interior" }, props: { title: "Concrete Coating In Interior" } },
-    { params: { slug: "meet-theresa-the-new-team-member" }, props: { title: "Meet Theresa The New Team Member" } },
-  ];
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
-const { title } = Astro.props;
+const { post } = Astro.props as { post: (typeof posts)[number] };
 ---
-<BaseLayout title={title}>
-  <div class="padding-global">
-    <div class="container-large">
-      <h1>{title}.</h1>
-    </div>
-  </div>
-</BaseLayout>
+<BaseLayout title={post.title}><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1>{post.title}.</h1><img src={post.cover} alt={post.coverAlt} /><img src={dividerUrl} alt="" aria-hidden="true" /></div></div></BaseLayout>
