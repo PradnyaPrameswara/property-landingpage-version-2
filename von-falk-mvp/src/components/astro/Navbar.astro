@@ -1,0 +1,7 @@
+---
+import mainLogoUrl from "../../assets/65e217e6568115217fe51b9e_main-logo.svg?url";
+import MobileMenu from "../react/MobileMenu.tsx";
+
+const links = [{href:"/",label:"Home."},{href:"/about-us",label:"About Us."},{href:"/projects",label:"Projects"},{href:"/services",label:"Services."},{href:"/team",label:"Team."},{href:"/blog",label:"Blog."},{href:"/contact",label:"Contact."}];
+---
+<header role="banner"><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><div class="grid grid-cols-3 items-center"><div></div><a href="/" aria-label="Von Falk home"><img src={mainLogoUrl} alt="Von Falk" /></a><div class="flex justify-end"><nav aria-label="Primary" class="hidden gap-6 md:flex">{links.map(l => <a href={l.href}>{l.label}</a>)}</nav><MobileMenu links={links} client:visible /></div></div></div></div></header>
