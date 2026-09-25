@@ -1,0 +1,10 @@
+# Derived skill links (restorable via skills-lock.json)
+.claude/
+agent/
+
+# Local issue tracker (see docs/agents/issue-tracker.md)
+.scratch/
+
+# OS / editor
+.DS_Store
+Thumbs.db
