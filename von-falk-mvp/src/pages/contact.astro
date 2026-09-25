@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactForm from "@/components/react/ContactForm";
+import MapFacade from "@/components/react/MapFacade";
 import touchImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp?url";
 ---
 <BaseLayout title="Contact">
@@ -11,7 +13,9 @@ import touchImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp
       <p>1054XM Amsterdam.</p>
       <p><a href="mailto:info@vonfalk.nl">info@vonfalk.nl</a></p>
       <p><a href="tel:+31640125678">+31 6 40125678</a></p>
+      <ContactForm client:visible />
       <img src={touchImg} alt="Interior detail, contact Von Falk" />
+      <MapFacade client:visible />
     </div>
   </div>
 </BaseLayout>

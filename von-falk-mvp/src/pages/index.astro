@@ -13,12 +13,12 @@ import touchImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp
         <img src={heroImg} alt="Minimal living room interior designed by Von Falk" />
         <p>Designing minimal spaces embracing the value of every detail.</p>
       </section>
-      <section>
+      <section class="reveal">
         <h2>Projects</h2>
         <a href="/projects">See All</a>
         <div>
           {projects.map((project) => (
-            <a href={`/project/${project.slug}`}>
+            <a href={`/project/${project.slug}`} class="reveal">
               <img src={project.cover} alt={project.coverAlt} class="cover" />
               <h3>{project.title}</h3>
               <p>{project.city}</p>
@@ -26,7 +26,7 @@ import touchImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp
           ))}
         </div>
       </section>
-      <section>
+      <section class="reveal">
         <h2>Services</h2>
         <ol>
           {services.map((service, index) => (
@@ -37,7 +37,7 @@ import touchImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp
           ))}
         </ol>
       </section>
-      <section>
+      <section class="reveal">
         <h2>Get in touch</h2>
         <img src={touchImg} alt="Interior detail, contact Von Falk" />
         <a href="/contact">Contact</a>
