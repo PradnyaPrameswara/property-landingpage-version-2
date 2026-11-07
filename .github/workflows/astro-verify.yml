@@ -59,7 +59,7 @@ jobs:
             for viewport in "390,1000" "1440,1000"; do
               if [ "$viewport" = "390,1000" ]; then label=mobile; else label=desktop; fi
               "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-                --force-device-scale-factor=1 --virtual-time-budget=1500 \
+                --force-device-scale-factor=1 --virtual-time-budget=4000 \
                 --window-size="$viewport" \
                 --screenshot="visual-snapshots/$route-$label.png" \
                 "http://127.0.0.1:4321/$path"
