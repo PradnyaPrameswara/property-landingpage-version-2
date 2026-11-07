@@ -7,25 +7,25 @@ import processImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.we
 const sections = [
   {
     title: "Concept.",
-    text: "Each project begins with an understanding of the space and the people who use it. We focus on purposeful composition, proportion and the details that make a place feel personal.",
+    text: "Each project begins with a careful understanding of the space and the people who use it. We consider how rooms connect, where natural light enters, and which elements deserve attention. The result is a purposeful composition with details that make the interior feel both personal and quietly balanced.",
     image: conceptImg,
     alt: "Architectural interior with natural textures",
   },
   {
     title: "Inspiration.",
-    text: "Materials, light and everyday life inform an interior that feels calm without losing its character. The simplest decisions are often the most meaningful.",
+    text: "Materials, natural light and everyday life inform an interior that feels calm without losing its character. We find inspiration in the relationship between colours, objects and textures, and in the small details that make a space memorable. The simplest decisions are often the most meaningful.",
     image: inspirationImg,
     alt: "Bright, minimal living room with considered furniture",
   },
   {
     title: "Approach.",
-    text: "We bring together furniture, colour, texture and lighting to shape spaces that are comfortable, considered and timeless.",
+    text: "We bring together furniture, colour, texture and lighting to shape spaces that are comfortable, considered and lasting. Every choice is evaluated in relation to the architecture and the surrounding pieces, so the finished room works as a whole rather than a collection of individual objects.",
     image: approachImg,
     alt: "Sculptural details in a serene interior",
   },
   {
     title: "Process.",
-    text: "From the first ideas to the final arrangement, we work to keep every element coherent and every detail in balance.",
+    text: "From the first ideas to the final arrangement, the design develops through a series of considered decisions. We refine proportions, surfaces and furnishings together, keeping the practical needs of the space in view while giving each detail the attention it deserves.",
     image: processImg,
     alt: "Finished living room interior with a green accent",
   },
@@ -38,7 +38,7 @@ const sections = [
       {sections.map((section) => (
         <section class="vf-editorial-row reveal" aria-labelledby={section.title.replace(".", "").toLowerCase() + "-title"}>
           <div class="vf-editorial-media">
-            <img src={section.image} alt={section.alt} loading="lazy" decoding="async" width="900" height="1125" />
+            <img src={section.image} alt={section.alt} loading="eager" decoding="async" width="900" height="1125" />
           </div>
           <div class="vf-editorial-text">
             <h2 id={section.title.replace(".", "").toLowerCase() + "-title"}>{section.title}</h2>
