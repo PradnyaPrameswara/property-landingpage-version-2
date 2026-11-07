@@ -129,7 +129,8 @@ export default function ContactForm() {
             {" "}<a href={draft} style={{ textDecoration: "underline" }}>Open email draft again</a>.
           </p>
         )}
-        <Button className="vf-submit" type="submit" disabled={disabled}>
+        {!CONTACT_ENDPOINT && <p id="contact-email-note" className="sr-only">Preparing an email opens your email application. No enquiry is sent until you send it yourself.</p>}
+        <Button className="vf-submit" type="submit" disabled={disabled} aria-describedby={!CONTACT_ENDPOINT ? "contact-email-note" : undefined}>
           {disabled ? "Sending…" : CONTACT_ENDPOINT ? "Submit" : "Prepare email"}
         </Button>
       </FieldGroup>

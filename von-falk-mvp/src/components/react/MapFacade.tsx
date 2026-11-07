@@ -9,6 +9,7 @@ export default function MapFacade() {
         <div style={{ textAlign: "center" }}>
           <p>Kanaalstraat 116, 1054XM Amsterdam.</p>
           <button type="button" onClick={() => setLoaded(true)}>Load map</button>
+          <a href="https://www.google.com/maps/search/?api=1&query=Kanaalstraat%20116%2C%201054XM%20Amsterdam" target="_blank" rel="noopener noreferrer">Open directions in Google Maps</a>
         </div>
       </div>
     );
