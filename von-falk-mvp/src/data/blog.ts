@@ -20,7 +20,7 @@ export const posts: BlogPost[] = [
     title: "Dry floral compositions: guide to match the interior",
     cover: coverA,
     coverAlt: "Dried botanical arrangement in a natural interior",
-    excerpt: "An exploration of botanical forms, natural materials and understated compositions.",
+    excerpt: "Dried flowers and branches introduce distinctive shapes and subtle colour into an interior. Here we explore how to create a balanced composition, choose the right vessel, and let natural materials complement the furniture, surfaces and light already present in the room.",
     images: [detail2, detail3],
     paragraphs: [
       "Dried arrangements bring texture and shape to an interior without needing to compete with the surrounding materials. A few carefully selected stems can have more presence than a crowded arrangement.",
@@ -32,7 +32,7 @@ export const posts: BlogPost[] = [
     title: "Concrete coating in interior",
     cover: coverB,
     coverAlt: "Minimalist interior with a sculptural lamp and neutral finishes",
-    excerpt: "A closer look at the soft texture and quiet visual presence of concrete finishes.",
+    excerpt: "Concrete and mineral finishes can form a calm, continuous backdrop for contemporary interiors. We look at their texture, their relationship with natural light and wood, and how a restrained surface treatment can help different elements of a room feel considered and connected.",
     images: [detail3, detail2],
     paragraphs: [
       "A continuous surface can make even a compact room feel composed. Concrete-like finishes offer a restrained backdrop for furnishings, artwork and the play of natural light.",
@@ -44,7 +44,7 @@ export const posts: BlogPost[] = [
     title: "Meet Theresa, the new team member",
     cover: team1,
     coverAlt: "Portrait of Theresa Jaasma",
-    excerpt: "Introducing Theresa Jaasma, interior designer at Von Falk.",
+    excerpt: "Meet Theresa Jaasma, interior designer at Von Falk. Discover the team behind the studio's carefully composed spaces, where material selection, spatial balance and attention to detail help bring character and a sense of calm into each project.",
     images: [detail2, detail3],
     paragraphs: [
       "Theresa Jaasma is part of the Von Falk interior design team. Our team brings together complementary perspectives on thoughtful interiors.",
