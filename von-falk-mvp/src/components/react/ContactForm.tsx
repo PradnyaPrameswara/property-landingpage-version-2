@@ -79,10 +79,10 @@ export default function ContactForm() {
 
   const disabled = status === "sending";
   const entries: { key: FieldKey; label: string; type?: string; placeholder: string }[] = [
-    { key: "name", label: "01. Name.", placeholder: "Your name" },
-    { key: "email", label: "02. E-mail.", type: "email", placeholder: "Your email" },
-    { key: "phone", label: "03. Phone.", type: "tel", placeholder: "Your phone" },
-    { key: "subject", label: "04. Subject.", placeholder: "Subject" },
+    { key: "name", label: "01. Name.", placeholder: "Name." },
+    { key: "email", label: "02. E-mail.", type: "email", placeholder: "E-mail." },
+    { key: "phone", label: "03. Phone.", type: "tel", placeholder: "Phone." },
+    { key: "subject", label: "04. Subject.", placeholder: "Subject." },
   ];
 
   return (
@@ -112,7 +112,7 @@ export default function ContactForm() {
           <Textarea
             id="contact-about"
             name="about"
-            placeholder="Tell us about your project"
+            placeholder="About the project."
             required
             maxLength={5000}
             value={fields.about}
