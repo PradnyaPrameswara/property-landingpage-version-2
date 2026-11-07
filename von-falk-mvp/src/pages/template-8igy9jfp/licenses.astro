@@ -1,25 +1,106 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import image1 from "../../assets/65b26b78d55e2546b6c1f3d4_team-image-1.webp?url";
-import image2 from "../../assets/65e5bb637c43cfb3afa4f453_project-cover-1.webp?url";
-import image3 from "../../assets/65e5bb327aafbb862b1f815c_project-image-1.webp?url";
-import image4 from "../../assets/65b0f4ad206196c4fe490811_services-image-6.webp?url";
-import image5 from "../../assets/65b28a50f69f76ddafb94648_blog-cover-image-1.webp?url";
-import image6 from "../../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp?url";
-import image7 from "../../assets/65e5bb3c355dbdde0cf724f4_project-cover-2.webp?url";
-const gallery = [image1,image2,image3,image4,image5,image6,image7];
+import pexelsComposite from "../../assets/license/pexels-composite.webp?url";
+import unsplashComposite from "../../assets/license/unsplash-composite.webp?url";
+
+const imageSources = [
+  {
+    title: "Pexels",
+    website: "https://www.pexels.com/",
+    license: "https://www.pexels.com/license/",
+    composite: pexelsComposite,
+    compositeAlt: "Collage of six photographs credited to Pexels contributors",
+    groups: [
+    {
+        "group": "Blog",
+        "links": [
+            "https://www.pexels.com/@kseniachernaya/",
+            "https://www.pexels.com/@rachel-claire/"
+        ]
+    },
+    {
+        "group": "Services",
+        "links": [
+            "https://www.pexels.com/@kseniachernaya/",
+            "https://www.pexels.com/@karolina-grabowska/",
+            "https://www.pexels.com/@pixabay/",
+            "https://www.pexels.com/@tima-miroshnichenko/",
+            "https://www.pexels.com/@heyho/",
+            "https://www.pexels.com/@roman-ska-3453281/"
+        ]
+    }
+],
+  },
+  {
+    title: "Unsplash",
+    website: "https://unsplash.com/",
+    license: "https://unsplash.com/license",
+    composite: unsplashComposite,
+    compositeAlt: "Collage of photographs credited to Unsplash contributors",
+    groups: [
+    {
+        "group": "Static Von Falk pages",
+        "links": [
+            "https://unsplash.com/@jalgtvstand"
+        ]
+    },
+    {
+        "group": "Projects",
+        "links": [
+            "https://unsplash.com/@itsbilalmn",
+            "https://unsplash.com/@deconovo"
+        ]
+    },
+    {
+        "group": "Blog",
+        "links": [
+            "https://unsplash.com/@mathildelangevin"
+        ]
+    },
+    {
+        "group": "Services",
+        "links": [
+            "https://unsplash.com/@juleskwak",
+            "https://unsplash.com/@jipy32"
+        ]
+    },
+    {
+        "group": "Team",
+        "links": [
+            "https://unsplash.com/@olenkasergienko",
+            "https://unsplash.com/@blakepnw",
+            "https://unsplash.com/@zabegina"
+        ]
+    }
+],
+  },
+];
 ---
-<BaseLayout title="License" description="Image usage information for the Von Falk website.">
+<BaseLayout title="License" description="Credits and source licenses for images used on the Von Falk website.">
   <div class="vf-container vf-license-page">
-    <h1>License</h1>
-    <p>All graphical assets in the original template are intended for use in its design. Before reusing an individual photograph, check its applicable image license.</p>
-    <h2>Pexels</h2>
-    <p>The original template credits photographic material to <a href="https://www.pexels.com/license/" rel="noopener noreferrer">Pexels</a>. Image usage is subject to the terms of its original source.</p>
-    <div class="vf-license-gallery" aria-label="Examples of imagery used in the website">
-      {gallery.map((src,index) => (
-        <img src={src} alt={"Example interior or portrait image " + (index + 1)} loading="eager" decoding="sync" width="400" height="500" />
+    <div class="vf-license-content">
+      <h1>License</h1>
+      <p>All graphical assets in this template are licensed for personal and commercial use. If you'd like to use a specific asset, please check the license below.</p>
+      {imageSources.map((source) => (
+        <section class="vf-license-source" aria-label={source.title + " image credits"}>
+          <h2>{source.title}</h2>
+          <p>
+            These photographs were sourced from <a href={source.website} target="_blank" rel="noopener noreferrer">{source.title}</a>.
+            <a href={source.license} target="_blank" rel="noopener noreferrer">{source.title} license</a>.
+          </p>
+          <img src={source.composite} alt={source.compositeAlt} class="vf-license-composite" loading="lazy" decoding="async" />
+          <p class="vf-license-credits-intro">Below are the profiles of the original image creators and/or publishers, grouped by the template pages where their work was used:</p>
+          {source.groups.map((group) => (
+            <div class="vf-license-credit-group">
+              <h3>{group.group}:</h3>
+              <ul>
+                {group.links.map((url) => <li><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>)}
+              </ul>
+            </div>
+          ))}
+        </section>
       ))}
+      <p class="vf-license-note">Individual image licenses and third-party rights remain subject to the linked sources.</p>
     </div>
-    <p class="vf-license-note">The original Webflow asset catalogue is retained in the repository's version history for attribution research. This page does not grant rights beyond the relevant source licenses.</p>
   </div>
 </BaseLayout>
