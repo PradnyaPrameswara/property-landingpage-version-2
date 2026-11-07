@@ -51,6 +51,19 @@ jobs:
           git -C .. archive 1385bc25b16b8be15aa4c57297afea82969fdad9 | tar -x -C "$RUNNER_TEMP/vonfalk-original"
           test -s "$RUNNER_TEMP/vonfalk-original/index.html"
           test -s "$RUNNER_TEMP/vonfalk-original/template-8igy9jfp/licenses.html"
+      - name: Download historical reference stylesheet
+        run: |
+          curl --fail --location --retry 3 --max-time 90 \
+            "https://assets-global.website-files.com/65afab2b82c75aa35f79f8f2/css/von-falk.webflow.e19f53618.min.css" \
+            --output "$RUNNER_TEMP/vonfalk-original.css"
+          test "$(wc -c < "$RUNNER_TEMP/vonfalk-original.css")" -gt 10000
+      - name: Upload historical reference CSS for visual audits
+        uses: actions/upload-artifact@v4
+        with:
+          name: von-falk-original-css-reference
+          path: ${{ runner.temp }}/vonfalk-original.css
+          if-no-files-found: error
+          retention-days: 7
       - name: Capture browser snapshots
         run: |
           npm run preview -- --host 127.0.0.1 --port 4321 > preview.log 2>&1 &
