@@ -1,0 +1,39 @@
+name: Import original license image composites
+
+on:
+  push:
+    branches:
+      - feature/von-falk-license-asset-fidelity
+    paths:
+      - ".github/workflows/sync-von-falk-license-assets.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download original composite images into the repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p von-falk-mvp/src/assets/license
+          curl --fail --location --retry 3 --max-time 90 \
+            "https://cdn.prod.website-files.com/65afab2b82c75aa35f79f8f2/65e869b05d5efbd20f0b9fa0_pexels.webp" \
+            --output von-falk-mvp/src/assets/license/pexels-composite.webp
+          curl --fail --location --retry 3 --max-time 90 \
+            "https://cdn.prod.website-files.com/65afab2b82c75aa35f79f8f2/65e86a510ee73962a251caa5_unsplash.webp" \
+            --output von-falk-mvp/src/assets/license/unsplash-composite.webp
+          for file in von-falk-mvp/src/assets/license/*.webp; do
+            test "$(file --mime-type -b "$file")" = "image/webp"
+            test "$(stat -c%s "$file")" -gt 10000
+            echo "$file ($(stat -c%s "$file") bytes)"
+          done
+          git add von-falk-mvp/src/assets/license/*.webp
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m "assets: preserve original license photo composites locally"
+            git push
+          fi
