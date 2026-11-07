@@ -48,7 +48,7 @@ jobs:
       - name: Restore historical Webflow reference
         run: |
           mkdir -p "$RUNNER_TEMP/vonfalk-original"
-          git archive 1385bc25b16b8be15aa4c57297afea82969fdad9 | tar -x -C "$RUNNER_TEMP/vonfalk-original"
+          git -C .. archive 1385bc25b16b8be15aa4c57297afea82969fdad9 | tar -x -C "$RUNNER_TEMP/vonfalk-original"
           test -s "$RUNNER_TEMP/vonfalk-original/index.html"
           test -s "$RUNNER_TEMP/vonfalk-original/template-8igy9jfp/licenses.html"
       - name: Capture browser snapshots
