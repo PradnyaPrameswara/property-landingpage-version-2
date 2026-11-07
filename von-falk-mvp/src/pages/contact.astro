@@ -4,18 +4,23 @@ import ContactForm from "@/components/react/ContactForm";
 import MapFacade from "@/components/react/MapFacade";
 import touchImg from "../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp?url";
 ---
-<BaseLayout title="Contact">
-  <div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]">
-    <div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]">
-      <h1>Contact.</h1>
-      <h2>Come visit us.</h2>
-      <p>Kanaalstraat 116.</p>
-      <p>1054XM Amsterdam.</p>
-      <p><a href="mailto:info@vonfalk.nl">info@vonfalk.nl</a></p>
-      <p><a href="tel:+31640125678">+31 6 40125678</a></p>
-      <ContactForm client:visible />
-      <img src={touchImg} alt="Interior detail, contact Von Falk" />
-      <MapFacade client:visible />
-    </div>
+<BaseLayout title="Contact" description="Contact Von Falk or visit our studio in Amsterdam.">
+  <div class="vf-container">
+    <header class="vf-intro"><h1 class="vf-page-title">Contact.</h1></header>
+    <section class="vf-section vf-form-layout" aria-label="Project enquiry">
+      <div><ContactForm client:visible /></div>
+      <div><img class="vf-form-image" src={touchImg} alt="Living room with carefully arranged furniture and a green sofa" loading="lazy" decoding="async" width="900" height="1125" /></div>
+    </section>
+    <section class="vf-section vf-two-column" aria-labelledby="visit-heading">
+      <div class="vf-map-facade"><MapFacade client:visible /></div>
+      <div>
+        <h2 class="vf-heading" id="visit-heading" style="margin-bottom:2rem">Come visit us.</h2>
+        <address class="vf-copy" style="font-style:normal">
+          Kanaalstraat 116.<br />1054XM Amsterdam.<br />
+          <a href="mailto:info@vonfalk.nl">info@vonfalk.nl</a><br />
+          <a href="tel:+31640125678">+31 6 40125678</a>
+        </address>
+      </div>
+    </section>
   </div>
 </BaseLayout>
