@@ -20,8 +20,8 @@ export const posts: BlogPost[] = [
     title: "Dry floral compositions: guide to match the interior",
     cover: coverA,
     coverAlt: "Dried botanical arrangement in a natural interior",
-    excerpt: "Dried flowers and branches bring sculptural shapes and subtle colour into an interior. Thoughtful compositions can sit naturally alongside furniture, textured surfaces and light. Choosing a suitable vessel and a restrained palette keeps the arrangement in balance. Even a single stem can give a quiet corner character without overwhelming the room.",
-    images: [detail2, detail3],
+    excerpt: "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.",
+    images: [detail2],
     paragraphs: [
       "Dried arrangements bring texture and shape to an interior without needing to compete with the surrounding materials. A few carefully selected stems can have more presence than a crowded arrangement.",
       "Look to the room's palette first. Muted greens, warm neutrals and organic shapes make it easier for a composition to feel part of the space rather than a separate decoration.",
@@ -32,8 +32,8 @@ export const posts: BlogPost[] = [
     title: "Concrete coating in interior",
     cover: coverB,
     coverAlt: "Minimalist interior with a sculptural lamp and neutral finishes",
-    excerpt: "Concrete and mineral finishes can form a calm, continuous backdrop for contemporary interiors. We look at their texture, their relationship with natural light and wood, and how a restrained surface treatment can help different elements of a room feel considered and connected.",
-    images: [detail3, detail2],
+    excerpt: "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.",
+    images: [detail2, detail3],
     paragraphs: [
       "A continuous surface can make even a compact room feel composed. Concrete-like finishes offer a restrained backdrop for furnishings, artwork and the play of natural light.",
       "Consider how the material interacts with the rest of the room. Texture, tone and the treatment of adjoining surfaces have a stronger effect than colour alone.",
@@ -44,8 +44,8 @@ export const posts: BlogPost[] = [
     title: "Meet Theresa, the new team member",
     cover: team1,
     coverAlt: "Portrait of Theresa Jaasma",
-    excerpt: "Meet Theresa Jaasma, interior designer at Von Falk. Discover the team behind the studio's carefully composed spaces, where material selection, spatial balance and attention to detail help bring character and a sense of calm into each project.",
-    images: [detail2, detail3],
+    excerpt: "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.",
+    images: [],
     paragraphs: [
       "Theresa Jaasma is part of the Von Falk interior design team. Our team brings together complementary perspectives on thoughtful interiors.",
       "The studio's work is guided by a shared attention to spatial balance, material choices and details that support everyday life.",

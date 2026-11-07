@@ -411,3 +411,64 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-contact-page .vf-form-image { max-width: 130px; }
   .vf-contact-page .vf-two-column { margin-top: 11.625rem; }
 }
+
+/* Editorial structure follows the frozen Webflow project and journal rich text. */
+@media (min-width: 641px) {
+  .vf-project-intro {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
+    gap: clamp(4rem, 8vw, 10rem);
+  }
+  .vf-project-intro-content { min-width: 0; }
+  .vf-project-story { margin-top: clamp(2.5rem, 3.3vw, 3.75rem); max-width: 43rem; }
+  .vf-project-aside { padding-top: .2rem; }
+}
+.vf-reference-richtext { font-size: .875rem; line-height: 1.42; }
+.vf-reference-richtext h2 { font-size: 1.15rem; font-weight: 600; margin: 0 0 .6rem; }
+.vf-reference-richtext h3 { font-size: 1rem; font-weight: 600; margin: .45rem 0; }
+.vf-reference-richtext h4 { font-size: .9rem; font-weight: 600; margin: .45rem 0; }
+.vf-reference-richtext p { font-size: inherit; line-height: inherit; margin: .5rem 0; max-width: none; }
+.vf-reference-richtext ul, .vf-reference-richtext ol { padding-left: 1.35rem; margin: .5rem 0; }
+.vf-reference-richtext ul { list-style: disc; }
+.vf-reference-richtext ol { list-style: decimal; }
+.vf-reference-richtext li { padding-block: .1rem; }
+.vf-reference-richtext a { text-decoration: underline; text-underline-offset: .1em; }
+.vf-reference-richtext blockquote { margin-top: .75rem; border-left: 2px solid var(--vf-rule); padding-left: .9rem; }
+.vf-project-desktop-meta { margin-top: 2rem; }
+.vf-project-desktop-meta .vf-project-year { margin-top: 2.2rem; font-size: 1.3rem; }
+.vf-project-story h2 { font-size: 1.15rem; margin-bottom: .6rem; }
+.vf-blog-detail-copy .vf-reference-richtext h2 { font-size: 1.2rem; margin-bottom: .6rem; }
+.vf-blog-detail-copy .vf-reference-richtext h3 { font-size: 1.05rem; margin-top: .65rem; }
+.vf-blog-detail-copy .vf-reference-richtext p { margin-top: .5rem; }
+@media (max-width: 640px) {
+  .vf-project-mobile-details .vf-reference-richtext { margin-top: 1rem; font-size: .85rem; }
+  .vf-blog-detail-copy .vf-reference-richtext { font-size: .875rem; line-height: 1.4; }
+  .vf-blog-detail-copy .vf-reference-richtext h2 { font-size: 1.18rem; }
+}
+
+/* Screenshot-matched editorial first folds; original static export is the content authority. */
+@media (min-width: 641px) {
+  .vf-project-title { font-size: clamp(3.5rem, 7vw, 8rem); line-height: .95; }
+  .vf-blog-detail-title { font-size: clamp(3.6rem, 5.9vw, 7rem); line-height: .97; }
+  .vf-blog-detail-copy { margin-top: clamp(2.5rem, 5.5vw, 6rem); }
+  .vf-about-page { padding-inline: clamp(1.5rem, 2.8vw, 3rem); }
+  .vf-about-page .vf-editorial-row { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); }
+  .vf-about-page .vf-editorial-row:first-child { margin-top: clamp(1rem, 2.5vw, 2.5rem); }
+}
+.vf-reference-richtext { font-size: .94rem; line-height: 1.4; }
+.vf-reference-richtext p, .vf-reference-richtext li { text-align: justify; }
+@media (max-width: 640px) {
+  .vf-blog-detail-title { font-size: clamp(2.25rem, 11.3vw, 3rem); line-height: 1.02; }
+  .vf-blog-detail-copy .vf-reference-richtext { font-size: .94rem; line-height: 1.43; }
+  .vf-about-page .vf-editorial-row:first-child { margin-top: .9rem; }
+  .vf-about-page .vf-editorial-row, .vf-services-page .vf-editorial-row { margin-bottom: 11rem; }
+}
+
+/* Exact media framing and text gutters in original mobile project and blog templates. */
+@media (max-width: 640px) {
+  .vf-project-detail-page, .vf-blog-detail-page { padding-inline: 1.85rem; }
+  .vf-project-title { font-size: clamp(2.15rem, 10.5vw, 3rem); line-height: 1; }
+  .vf-project-gallery { margin-top: 10.5rem; gap: 1.5rem; }
+  .vf-project-gallery img { aspect-ratio: 1.82; }
+  .vf-project-mobile-details summary span { font-size: .95rem; }
+  .vf-blog-detail-title { font-size: clamp(2.2rem, 10.4vw, 2.85rem); letter-spacing: -.085em; }
+}

@@ -1,0 +1,18 @@
+---
+interface Props { variant: "project" | "blog" }
+const { variant } = Astro.props;
+const item = "Sample text is being used as a placeholder for real text that is normally present.";
+---
+<div class="vf-reference-richtext">
+  <h2>Heading 2</h2>
+  <h3>Heading 3</h3>
+  <h4>Heading 4</h4>
+  <p>Sample text with a <a href="https://finsweet.com/" target="_blank" rel="noopener noreferrer">link</a> is being used as a placeholder for real text that is normally present. Sample text helps you understand how real text may look on your website. Sample text is being used as a placeholder for real text. Sample text is being used as a placeholder for real text. Sample text is being used as a placeholder for real text.</p>
+  <ul>
+    {Array.from({ length: variant === "blog" ? 3 : 1 }, () => <li>{item}</li>)}
+  </ul>
+  <ol>
+    {Array.from({ length: 3 }, () => <li>{item}</li>)}
+  </ol>
+  <blockquote>Sample text is being used as a placeholder for real text that is normally present. Sample text helps you understand how real text may look on your website. Sample text is being used as a placeholder for real text that is normally present.</blockquote>
+</div>
