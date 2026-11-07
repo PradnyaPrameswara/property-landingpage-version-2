@@ -23,6 +23,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # The original Webflow export is retained only in a historical commit.
+          fetch-depth: 0
       - name: Node.js
         uses: actions/setup-node@v4
         with:
@@ -42,6 +45,12 @@ jobs:
       - name: Check generated route count
         run: |
           test "$(find dist -type f -name index.html | wc -l)" -eq 14
+      - name: Restore historical Webflow reference
+        run: |
+          mkdir -p "$RUNNER_TEMP/vonfalk-original"
+          git -C .. archive 1385bc25b16b8be15aa4c57297afea82969fdad9 | tar -x -C "$RUNNER_TEMP/vonfalk-original"
+          test -s "$RUNNER_TEMP/vonfalk-original/index.html"
+          test -s "$RUNNER_TEMP/vonfalk-original/template-8igy9jfp/licenses.html"
       - name: Capture browser snapshots
         run: |
           npm run preview -- --host 127.0.0.1 --port 4321 > preview.log 2>&1 &
@@ -51,9 +60,11 @@ jobs:
           done
           curl --fail http://127.0.0.1:4321/ > /dev/null
           CHROME_PATH="$(command -v google-chrome || command -v chromium)" node scripts/interaction-smoke.mjs
+          python3 -m http.server 4322 --directory "$RUNNER_TEMP/vonfalk-original" > reference.log 2>&1 &
+          curl --retry 6 --retry-connrefused --retry-delay 1 --fail http://127.0.0.1:4322/index.html > /dev/null
           CHROME="$(command -v google-chrome || command -v chromium)"
           mkdir -p visual-snapshots
-          # Capture all 14 Astro routes; reference remains in Git history.
+          # Capture original/Astro pairs from the historical export without reintroducing legacy runtime into main.
           routes=(
             "home|index.html|/"
             "about-us|about-us.html|/about-us"
@@ -74,6 +85,7 @@ jobs:
           for spec in "${routes[@]}"; do
             IFS='|' read -r route reference_path astro_path <<< "$spec"
             curl --fail --silent --show-error "http://127.0.0.1:4321$astro_path" > /dev/null
+            curl --fail --silent --show-error "http://127.0.0.1:4322/$reference_path" > /dev/null
             for viewport in "390,1000" "1440,1000"; do
               if [ "$viewport" = "390,1000" ]; then label=mobile; else label=desktop; fi
               "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
@@ -82,9 +94,15 @@ jobs:
                 --screenshot="visual-snapshots/$route-$label.png" \
                 "http://127.0.0.1:4321$astro_path"
               test -s "visual-snapshots/$route-$label.png"
+              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
+                --force-device-scale-factor=1 --virtual-time-budget=4000 \
+                --window-size="$viewport" \
+                --screenshot="visual-snapshots/reference-$route-$label.png" \
+                "http://127.0.0.1:4322/$reference_path"
+              test -s "visual-snapshots/reference-$route-$label.png"
             done
           done
-          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 28
+          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 56
           # Wider viewport coverage for representative high-impact pages.
           for spec in "home|index.html|/" "about-us|about-us.html|/about-us" \
                       "projects|projects.html|/projects" "contact|contact.html|/contact"; do
@@ -97,9 +115,15 @@ jobs:
                 --screenshot="visual-snapshots/$route-$label.png" \
                 "http://127.0.0.1:4321$astro_path"
               test -s "visual-snapshots/$route-$label.png"
+              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
+                --force-device-scale-factor=1 --virtual-time-budget=4000 \
+                --window-size="$viewport" \
+                --screenshot="visual-snapshots/reference-$route-$label.png" \
+                "http://127.0.0.1:4322/$reference_path"
+              test -s "visual-snapshots/reference-$route-$label.png"
             done
           done
-          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 44
+          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 88
       - name: Upload page snapshots
         uses: actions/upload-artifact@v4
         with:
