@@ -16,7 +16,8 @@ export default function GalleryLightbox({ photos, title }: { photos: GalleryPhot
 
   return (
     <>
-      {photos.map((photo, index) => (
+      <div className="vf-gallery-grid">
+        {photos.map((photo, index) => (
         <figure key={photo.src}>
           <button
             type="button"
@@ -35,6 +36,7 @@ export default function GalleryLightbox({ photos, title }: { photos: GalleryPhot
           </button>
         </figure>
       ))}
+      </div>
       <Dialog open={active !== null} onOpenChange={(isOpen) => { if (!isOpen) setActive(null); }}>
         <DialogContent
           className="vf-lightbox-popup"

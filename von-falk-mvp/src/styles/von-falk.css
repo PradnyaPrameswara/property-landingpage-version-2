@@ -545,3 +545,46 @@ body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 
   .vf-blog-detail-extra { order: 4; margin-top: 1.5rem; }
   .vf-blog-detail-cover img { aspect-ratio: 1.42; }
 }
+
+/* Gallery thumbnails must occupy separate grid tracks inside Astro's React island. */
+.vf-project-gallery { display: block; }
+.vf-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: clamp(1rem,2vw,3rem);
+  width: 100%;
+}
+.vf-gallery-grid figure { min-width: 0; overflow: hidden; }
+.vf-gallery-grid .vf-gallery-trigger { width: 100%; }
+@media (max-width: 767px) {
+  .vf-gallery-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* Webflow's 767px breakpoint: editorial and CMS grids become one column. */
+@media (min-width: 641px) and (max-width: 767px) {
+  .vf-header-inner { grid-template-columns: 1fr auto; min-height: 60px; }
+  .vf-header-inner > span[aria-hidden] { display: none; }
+  .vf-header-logo { justify-self: start; width: 7.6rem; }
+  .vf-header-actions { justify-content: end; }
+  .vf-project-grid, .vf-team-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .vf-project-card img { aspect-ratio: 1.4; }
+  .vf-about-page .vf-editorial-row,
+  .vf-services-page .vf-editorial-row,
+  .vf-blog-page .vf-editorial-row {
+    display: flex; flex-direction: column; gap: .65rem;
+    margin-block: 1.75rem 7rem;
+  }
+  .vf-about-page .vf-editorial-row .vf-editorial-media,
+  .vf-services-page .vf-editorial-row .vf-editorial-media { order: 2; width: 100%; }
+  .vf-about-page .vf-editorial-row .vf-editorial-text,
+  .vf-services-page .vf-editorial-row .vf-editorial-text { order: 1; padding: 0; width: 100%; }
+  .vf-blog-page .vf-editorial-row .vf-editorial-media { order: 1; width: 100%; }
+  .vf-blog-page .vf-editorial-row .vf-editorial-text { order: 2; width: 100%; }
+  .vf-editorial-media img { aspect-ratio: 1.44; }
+  .vf-form-layout, .vf-contact-page .vf-two-column { grid-template-columns: 1fr; }
+}
+@media (max-width: 479px) {
+  .vf-footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .vf-footer-right { align-items: flex-start; }
+  .vf-footer-legal { justify-content: flex-start; }
+}
