@@ -3,15 +3,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { team } from "@/data/team";
 ---
 <BaseLayout title="Team" description="Meet the people behind Von Falk interior design studio.">
-  <div class="vf-container">
+  <div class="vf-container vf-team-page">
     <header class="vf-intro"><h1 class="vf-page-title">Team.</h1></header>
-    <section class="vf-section" aria-label="The Von Falk team">
-      <div class="vf-three-column">
-        {team.map((member) => (
-          <article>
-            <img src={member.image} alt={member.imageAlt} loading="lazy" decoding="async" width="700" height="900" style="width:100%;aspect-ratio:4/5;object-fit:cover" />
-            <h2 class="vf-heading" style="margin-top:1.5rem;font-size:clamp(1.75rem,3vw,3.5rem)">{member.name}.</h2>
-            <p class="vf-copy" style="margin-top:.45rem">{member.role}.</p>
+    <section class="vf-team-section" aria-label="The Von Falk team">
+      <div class="vf-team-grid">
+        {team.map((member, index) => (
+          <article class="vf-team-card" data-index={index}>
+            <img src={member.image} alt={member.imageAlt} loading="eager" decoding="sync" width="900" height="900" />
+            <h2>{member.name}</h2>
+            <p>{member.role}.</p>
           </article>
         ))}
       </div>
