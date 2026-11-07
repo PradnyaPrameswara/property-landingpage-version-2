@@ -1,20 +1,15 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ProjectCard from "@/components/astro/ProjectCard.astro";
 import { projects } from "@/data/projects";
 ---
-<BaseLayout title="Projects">
-  <div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]">
-    <div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]">
-      <h1>Projects</h1>
-      <div>
-        {projects.map((project) => (
-          <a href={`/project/${project.slug}`}>
-            <img src={project.cover} alt={project.coverAlt} class="cover" />
-            <h3>{project.title}</h3>
-            <p>{project.city}</p>
-          </a>
-        ))}
+<BaseLayout title="Projects" description="Selected interiors and projects from Von Falk.">
+  <div class="vf-container">
+    <header class="vf-intro"><h1 class="vf-page-title">Projects.</h1></header>
+    <section class="vf-section" aria-label="Selected projects">
+      <div class="vf-project-grid">
+        {projects.map((project) => <ProjectCard project={project} />)}
       </div>
-    </div>
+    </section>
   </div>
 </BaseLayout>

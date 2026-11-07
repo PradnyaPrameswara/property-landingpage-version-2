@@ -1,0 +1,15 @@
+---
+import ContactForm from "../react/ContactForm";
+import touchImg from "../../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp?url";
+interface Props {
+  heading?: string;
+}
+const { heading = "Get in touch." } = Astro.props;
+---
+<section class="vf-section" aria-labelledby="get-in-touch-title">
+  <h2 id="get-in-touch-title" class="vf-section-title" style="margin-bottom:clamp(2rem,5vw,5rem)">{heading}</h2>
+  <div class="vf-form-layout">
+    <div><ContactForm client:visible /></div>
+    <div><img class="vf-form-image" src={touchImg} alt="Natural interior with muted green furnishings" loading="lazy" decoding="async" width="800" height="1000" /></div>
+  </div>
+</section>
