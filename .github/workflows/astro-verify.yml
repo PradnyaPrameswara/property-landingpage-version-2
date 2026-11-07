@@ -93,6 +93,27 @@ jobs:
             done
           done
           test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 56
+          # Wider viewport coverage for representative high-impact pages.
+          for spec in "home|index.html|/" "about-us|about-us.html|/about-us" \
+                      "projects|projects.html|/projects" "contact|contact.html|/contact"; do
+            IFS='|' read -r route reference_path astro_path <<< "$spec"
+            for viewport in "320,900" "768,1000" "1024,1000" "1920,1080"; do
+              label="${viewport%%,*}"
+              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
+                --force-device-scale-factor=1 --virtual-time-budget=6000 \
+                --window-size="$viewport" \
+                --screenshot="visual-snapshots/$route-$label.png" \
+                "http://127.0.0.1:4321$astro_path"
+              test -s "visual-snapshots/$route-$label.png"
+              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
+                --force-device-scale-factor=1 --virtual-time-budget=4000 \
+                --window-size="$viewport" \
+                --screenshot="visual-snapshots/reference-$route-$label.png" \
+                "http://127.0.0.1:4322/$reference_path"
+              test -s "visual-snapshots/reference-$route-$label.png"
+            done
+          done
+          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 88
       - name: Upload page snapshots
         uses: actions/upload-artifact@v4
         with:

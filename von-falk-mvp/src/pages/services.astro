@@ -18,7 +18,7 @@ const descriptions = [
       {services.map((service, index) => (
         <section class="vf-editorial-row reveal" aria-labelledby={"service-" + index}>
           <div class="vf-editorial-media">
-            <img src={service.image} alt={service.imageAlt} loading={index === 0 ? "eager" : "lazy"} decoding="async" width="900" height="1125" />
+            <img src={service.image} alt={service.imageAlt} loading={index === 0 ? "eager" : "lazy"} decoding={index === 0 ? "sync" : "async"} fetchpriority={index === 0 ? "high" : "auto"} width="900" height="1125" />
           </div>
           <div class="vf-editorial-text">
             <span class="vf-kicker" style="margin-bottom:1rem">{String(index + 1).padStart(2, "0")}</span>

@@ -35,10 +35,10 @@ const sections = [
   <div class="vf-container vf-about-page">
     <header class="vf-intro"><h1 class="vf-page-title">About Us.</h1></header>
     <div class="vf-editorial">
-      {sections.map((section) => (
+      {sections.map((section, index) => (
         <section class="vf-editorial-row reveal" aria-labelledby={section.title.replace(".", "").toLowerCase() + "-title"}>
           <div class="vf-editorial-media">
-            <img src={section.image} alt={section.alt} loading="eager" decoding="async" width="900" height="1125" />
+            <img src={section.image} alt={section.alt} loading={index === 0 ? "eager" : "lazy"} decoding={index === 0 ? "sync" : "async"} fetchpriority={index === 0 ? "high" : "auto"} width="900" height="1125" />
           </div>
           <div class="vf-editorial-text">
             <h2 id={section.title.replace(".", "").toLowerCase() + "-title"}>{section.title}</h2>
