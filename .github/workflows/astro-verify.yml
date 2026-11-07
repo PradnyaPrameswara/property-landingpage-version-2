@@ -50,6 +50,8 @@ jobs:
             sleep 1
           done
           curl --fail http://127.0.0.1:4321/ > /dev/null
+          python3 -m http.server 4322 --directory .. > reference.log 2>&1 &
+          curl --retry 5 --retry-connrefused --retry-delay 1 --fail http://127.0.0.1:4322/index.html > /dev/null
           CHROME="$(command -v google-chrome || command -v chromium)"
           mkdir -p visual-snapshots
           for route in home about-us services projects blog contact; do
@@ -62,6 +64,18 @@ jobs:
                 --screenshot="visual-snapshots/$route-$label.png" \
                 "http://127.0.0.1:4321/$path"
               test -s "visual-snapshots/$route-$label.png"
+            done
+          done
+          for route in home about-us services projects blog contact; do
+            if [ "$route" = home ]; then file="index.html"; else file="$route.html"; fi
+            for viewport in "390,1000" "1440,1000"; do
+              if [ "$viewport" = "390,1000" ]; then label=mobile; else label=desktop; fi
+              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
+                --force-device-scale-factor=1 --virtual-time-budget=3000 \
+                --window-size="$viewport" \
+                --screenshot="visual-snapshots/reference-$route-$label.png" \
+                "http://127.0.0.1:4322/$file"
+              test -s "visual-snapshots/reference-$route-$label.png"
             done
           done
       - name: Upload page snapshots
