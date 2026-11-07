@@ -1,25 +1,45 @@
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
-export default function MobileMenu({ links }: { links: { href: string; label: string }[] }) {
+interface Link {
+  href: string;
+  label: string;
+}
+
+export default function MobileMenu({ links, currentPath }: { links: Link[]; currentPath: string }) {
   const [open, setOpen] = useState(false);
+
   return (
-    <div className="md:hidden">
-      <button aria-expanded={open} aria-controls="mobile-nav" aria-label="Menu" onClick={() => setOpen(!open)}>
-        {open ? "Close" : "Menu"}
+    <div className="vf-menu" onKeyDown={(event) => {
+      if (event.key === "Escape") setOpen(false);
+    }}>
+      <button
+        type="button"
+        className="vf-menu-button"
+        aria-label={open ? "Close navigation" : "Open navigation"}
+        aria-controls="vf-nav"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
       </button>
-      {open ? (
-        <nav id="mobile-nav" aria-label="Mobile">
-          <ul className="flex flex-col gap-4">
-            {links.map((l) => (
-              <li key={l.href}>
-                <a href={l.href} onClick={() => setOpen(false)}>
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      ) : null}
+      {open && (
+        <div className="vf-menu-panel" id="vf-nav">
+          <nav aria-label="Main navigation">
+            <ul>
+              {links.map(({ href, label }) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    aria-current={currentPath === href ? "page" : undefined}
+                    onClick={() => setOpen(false)}
+                  >{label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      )}
     </div>
   );
 }
