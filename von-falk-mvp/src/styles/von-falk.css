@@ -248,3 +248,24 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-contact-page .vf-form-image { max-width: 200px; aspect-ratio: 1.5; }
   .vf-contact-page .vf-two-column { grid-template-columns: 1fr; }
 }
+
+/* Layout corrections verified against the original Webflow capture. */
+@media (min-width: 641px) {
+  .vf-hero-media img { object-position: center 83%; }
+  .vf-services-page .vf-editorial-row { grid-template-columns: 1.8fr 1fr; }
+}
+.vf-blog-page .vf-editorial-media { display: block; width: 100%; }
+.vf-blog-page .vf-editorial-media img { display: block; width: 100%; }
+@media (max-width: 640px) {
+  /* Keep the hero caption directly beneath the image, not vertically centered. */
+  .vf-hero-bottom { justify-content: flex-start; min-height: 13.5rem; margin-top: 1.25rem; }
+  .vf-hero-bottom .vf-link { height: 5.5rem; }
+  .vf-contact-page .vf-two-column { display: flex; flex-direction: column; }
+  .vf-contact-page .vf-two-column > :first-child { order: 2; }
+  .vf-contact-page .vf-two-column > :last-child { order: 1; }
+  .vf-contact-page .vf-form .vf-form-field { min-height: 29px; }
+  .vf-contact-page .vf-form .vf-form-field input { min-height: 29px; padding-block: .1rem; }
+  .vf-contact-page .vf-form .vf-form-field textarea { min-height: 58px; }
+  .vf-contact-page .vf-form .vf-submit { min-height: 34px; margin-top: .75rem; }
+}
+

@@ -9,7 +9,7 @@ import { posts } from "@/data/blog";
       {posts.map((post, index) => (
         <article class="vf-editorial-row reveal">
           <a href={"/blog/" + post.slug} class="vf-editorial-media" aria-label={"Read " + post.title}>
-            <img src={post.cover} alt={post.coverAlt} loading={index === 0 ? "eager" : "lazy"} decoding="async" width="900" height="1125" />
+            <img src={post.cover} alt={post.coverAlt} loading={index === 0 ? "eager" : "lazy"} decoding={index === 0 ? "sync" : "async"} fetchpriority={index === 0 ? "high" : "auto"} width="900" height="1125" />
           </a>
           <div class="vf-editorial-text">
             <h2><a href={"/blog/" + post.slug}>{post.title}.</a></h2>
