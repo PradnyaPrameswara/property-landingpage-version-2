@@ -1,3 +1,4 @@
+import process from "node:process";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
