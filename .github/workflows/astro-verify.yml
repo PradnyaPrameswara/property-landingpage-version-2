@@ -54,30 +54,45 @@ jobs:
           curl --retry 5 --retry-connrefused --retry-delay 1 --fail http://127.0.0.1:4322/index.html > /dev/null
           CHROME="$(command -v google-chrome || command -v chromium)"
           mkdir -p visual-snapshots
-          for route in home about-us services projects blog contact; do
-            if [ "$route" = home ]; then path=""; else path="$route"; fi
+          # Compare all 14 Astro routes with their frozen Webflow counterparts.
+          routes=(
+            "home|index.html|/"
+            "about-us|about-us.html|/about-us"
+            "services|services.html|/services"
+            "projects|projects.html|/projects"
+            "team|team.html|/team"
+            "blog|blog.html|/blog"
+            "contact|contact.html|/contact"
+            "project-niewuwndijk|project/niewuwndijk.html|/project/niewuwndijk"
+            "project-amethiststraat|project/amethiststraat.html|/project/amethiststraat"
+            "project-keizergracht|project/keizergracht.html|/project/keizergracht"
+            "blog-dry-floral|blog/dry-floral-compositions-guide-to-match-the-interior.html|/blog/dry-floral-compositions-guide-to-match-the-interior"
+            "blog-concrete|blog/concrete-coating-in-interior.html|/blog/concrete-coating-in-interior"
+            "blog-theresa|blog/meet-theresa-the-new-team-member.html|/blog/meet-theresa-the-new-team-member"
+            "licenses|template-8igy9jfp/licenses.html|/template-8igy9jfp/licenses"
+          )
+          test "${#routes[@]}" -eq 14
+          for spec in "${routes[@]}"; do
+            IFS='|' read -r route reference_path astro_path <<< "$spec"
+            curl --fail --silent --show-error "http://127.0.0.1:4321$astro_path" > /dev/null
+            curl --fail --silent --show-error "http://127.0.0.1:4322/$reference_path" > /dev/null
             for viewport in "390,1000" "1440,1000"; do
               if [ "$viewport" = "390,1000" ]; then label=mobile; else label=desktop; fi
+              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
+                --force-device-scale-factor=1 --virtual-time-budget=6000 \
+                --window-size="$viewport" \
+                --screenshot="visual-snapshots/$route-$label.png" \
+                "http://127.0.0.1:4321$astro_path"
+              test -s "visual-snapshots/$route-$label.png"
               "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
                 --force-device-scale-factor=1 --virtual-time-budget=4000 \
                 --window-size="$viewport" \
-                --screenshot="visual-snapshots/$route-$label.png" \
-                "http://127.0.0.1:4321/$path"
-              test -s "visual-snapshots/$route-$label.png"
-            done
-          done
-          for route in home about-us services projects blog contact; do
-            if [ "$route" = home ]; then file="index.html"; else file="$route.html"; fi
-            for viewport in "390,1000" "1440,1000"; do
-              if [ "$viewport" = "390,1000" ]; then label=mobile; else label=desktop; fi
-              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-                --force-device-scale-factor=1 --virtual-time-budget=3000 \
-                --window-size="$viewport" \
                 --screenshot="visual-snapshots/reference-$route-$label.png" \
-                "http://127.0.0.1:4322/$file"
+                "http://127.0.0.1:4322/$reference_path"
               test -s "visual-snapshots/reference-$route-$label.png"
             done
           done
+          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 56
       - name: Upload page snapshots
         uses: actions/upload-artifact@v4
         with:
