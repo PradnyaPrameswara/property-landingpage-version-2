@@ -15,11 +15,21 @@ export default defineConfig([
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
-    languageOptions: {
-      globals: globals.browser,
-    },
+    languageOptions: { globals: globals.browser },
     rules: {
-      "no-restricted-imports": ["error", { paths: [{ name: "cmdk", message: "Use Base-UI combobox instead." }], patterns: [{ group: ["@radix-ui/*"], message: "Base UI only." }, { group: ["cmdk", "cmdk/*"], message: "Use Base-UI combobox instead." }, { group: ["jquery", "jquery/*"], message: "No jQuery in MVP." }] }],
+      "no-restricted-imports": ["error", {
+        paths: [{ name: "cmdk", message: "Use Base UI combobox instead." }],
+        patterns: [
+          { group: ["@radix-ui/*"], message: "Base UI only." },
+          { group: ["cmdk", "cmdk/*"], message: "Use Base UI combobox instead." },
+          { group: ["jquery", "jquery/*"], message: "No jQuery in Astro." },
+        ],
+      }],
     },
+  },
+  {
+    // shadcn registry components intentionally export variants alongside UI.
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: { "react-refresh/only-export-components": "off" },
   },
 ])

@@ -1,0 +1,44 @@
+name: Astro verification
+
+on:
+  pull_request:
+    paths:
+      - "von-falk-mvp/**"
+      - ".github/workflows/astro-verify.yml"
+  push:
+    branches: [main]
+    paths:
+      - "von-falk-mvp/**"
+      - ".github/workflows/astro-verify.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: von-falk-mvp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: von-falk-mvp/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Source constraints
+        run: npm run verify:source
+      - name: Lint
+        run: npm run lint
+      - name: Astro and TypeScript
+        run: npm run typecheck
+      - name: Static build
+        run: npm run build
+      - name: Check generated route count
+        run: |
+          test "$(find dist -type f -name index.html | wc -l)" -eq 14
