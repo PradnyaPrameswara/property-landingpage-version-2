@@ -21,14 +21,14 @@ const pending = new Map();
 
 try {
   let port;
-  for (let attempt = 0; attempt < 100; attempt++) {
+  for (let attempt = 0; attempt < 300; attempt++) {
     if (chrome.exitCode !== null) throw new Error("Chrome exited during startup");
     try {
       port = Number((await readFile(join(profile, "DevToolsActivePort"), "utf8")).split("\n")[0]);
       break;
     } catch { await delay(100); }
   }
-  assert.ok(port, "Chrome DevTools port unavailable");
+  assert.ok(port, "Chrome DevTools port unavailable after 30s; check runner load and Chrome startup");
   const targets = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
   const target = targets.find((item) => item.type === "page");
   assert.ok(target, "Chrome page unavailable");
