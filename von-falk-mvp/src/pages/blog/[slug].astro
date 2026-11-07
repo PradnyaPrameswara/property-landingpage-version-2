@@ -1,32 +1,35 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { posts } from "@/data/blog";
+
 export function getStaticPaths() {
   return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 const { post } = Astro.props as { post: (typeof posts)[number] };
 ---
 <BaseLayout title={post.title} description={post.excerpt} image={post.cover}>
-  <div class="vf-container">
-    <section class="vf-intro" aria-labelledby="article-heading">
-      <div class="vf-detail-hero">
-        <div>
-          <a href="/blog" class="vf-link" style="margin-bottom:2.5rem">All articles</a>
-          <h1 class="vf-page-title" id="article-heading" style="font-size:clamp(3.25rem,7.8vw,9rem)">{post.title}.</h1>
+  <div class="vf-container vf-blog-detail-page">
+    <section class="vf-blog-detail-columns" aria-labelledby="article-title">
+      <div class="vf-blog-detail-text">
+        <h1 class="vf-blog-detail-title" id="article-title">{post.title}.</h1>
+        <article class="vf-blog-detail-copy">
+          <h2>Material and atmosphere.</h2>
+          <p>{post.paragraphs[0]}</p>
+          <h3>The details.</h3>
+          {post.paragraphs.slice(1).map((paragraph) => <p>{paragraph}</p>)}
+        </article>
+      </div>
+      <div class="vf-blog-detail-media">
+        <figure class="vf-blog-detail-cover">
+          <img src={post.cover} alt={post.coverAlt} width="1000" height="760" loading="eager" decoding="sync" fetchpriority="high" />
+        </figure>
+        <div class="vf-blog-detail-extra">
+          {post.images.map((src, index) => (
+            <figure><img src={src} alt={"Interior detail illustrating " + post.title + ", image " + (index + 1)} width="1000" height="760" loading="eager" decoding="sync" /></figure>
+          ))}
         </div>
-        <p class="vf-copy">{post.excerpt}</p>
       </div>
-      <div class="vf-detail-gallery">
-        <figure><img src={post.cover} alt={post.coverAlt} decoding="async" fetchpriority="high" width="1400" height="1100" /></figure>
-        {post.images.map((img, index) => (
-          <figure><img src={img} alt={"Interior detail accompanying " + post.title + ", image " + (index + 1)} loading="lazy" decoding="async" width="900" height="1125" /></figure>
-        ))}
-      </div>
-      <div class="vf-section vf-two-column" style="align-items:start">
-        <h2 class="vf-heading">The details.</h2>
-        <div>{post.paragraphs.map((paragraph) => <p class="vf-copy" style="margin-bottom:1.5rem">{paragraph}</p>)}</div>
-      </div>
-      <a class="vf-link" href="/blog">Back to blog</a>
     </section>
+    <div style="margin-top:clamp(3rem,6vw,7rem)"><a class="vf-link" href="/blog">Back to blog</a></div>
   </div>
 </BaseLayout>
