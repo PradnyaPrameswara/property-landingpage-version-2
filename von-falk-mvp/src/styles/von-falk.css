@@ -472,3 +472,23 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-project-mobile-details summary span { font-size: .95rem; }
   .vf-blog-detail-title { font-size: clamp(2.2rem, 10.4vw, 2.85rem); letter-spacing: -.085em; }
 }
+
+/* Native Base-UI gallery lightbox recreates Webflow's interactive project images. */
+.vf-gallery-trigger { display: block; padding: 0; border: 0; width: 100%; background: none; cursor: zoom-in; text-align: left; }
+.vf-gallery-trigger img { display: block; }
+body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 0 / 90%); backdrop-filter: none; }
+.vf-lightbox-popup[data-slot="dialog-content"] {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: min(94vw, 1440px); max-width: none; height: min(94vh, 960px);
+  padding: clamp(1rem, 2vw, 2.5rem); border: 0; border-radius: 0;
+  background: #111; color: #fff; box-shadow: 0 1rem 4rem rgb(0 0 0 / 30%); gap: 1rem;
+}
+.vf-lightbox-image { display: block; width: auto; max-width: 100%; max-height: calc(94vh - 10rem); object-fit: contain; }
+.vf-lightbox-close { position: absolute; top: .75rem; right: .75rem; color: #fff; }
+.vf-lightbox-toolbar { display: flex; align-items: center; justify-content: center; gap: 1.25rem; color: #fff; }
+.vf-lightbox-toolbar button { color: #fff; }
+.vf-lightbox-toolbar span { min-width: 3.5rem; text-align: center; font: 400 .9rem/1.4 'Noto Serif',serif; }
+@media (max-width: 640px) {
+  .vf-lightbox-popup[data-slot="dialog-content"] { width: 100vw; height: 100dvh; max-width: none; padding: 1rem; }
+  .vf-lightbox-image { max-height: calc(100dvh - 9rem); }
+}

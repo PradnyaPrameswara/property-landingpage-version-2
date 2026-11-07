@@ -116,6 +116,20 @@ try {
   await eventually('!!document.querySelector("iframe[title*=Map]")', Boolean, "map iframe");
   console.log("PASS map: opt-in embed");
 
+  await visit("/project/niewuwndijk");
+  await evaluate('document.querySelector(".vf-gallery-trigger")?.scrollIntoView()');
+  await eventually('document.querySelector(".vf-gallery-trigger")?.closest("astro-island")?.hasAttribute("ssr") === false',
+    Boolean, "project gallery hydration");
+  await evaluate('document.querySelector(".vf-gallery-trigger").click()');
+  await eventually('!!document.querySelector(".vf-lightbox-popup img.vf-lightbox-image")', Boolean, "gallery opens");
+  const firstPhoto = await evaluate('document.querySelector(".vf-lightbox-image")?.getAttribute("src")');
+  await evaluate('document.querySelector("[aria-label=\\"Next photo\\"]")?.click()');
+  await eventually('document.querySelector(".vf-lightbox-image")?.getAttribute("src")',
+    (value) => value && value !== firstPhoto, "gallery advances");
+  await evaluate('document.querySelector("[aria-label=\\"Close image viewer\\"]")?.click()');
+  await eventually('!document.querySelector(".vf-lightbox-popup")', Boolean, "gallery closes");
+  console.log("PASS gallery: opens, advances and closes");
+
   for (const width of [320,390,768,1440]) {
     await viewport(width);
     for (const path of ["/","/about-us","/projects","/contact"]) {
