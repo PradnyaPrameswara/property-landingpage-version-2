@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ReferenceRichText from "@/components/astro/ReferenceRichText.astro";
 import { posts } from "@/data/blog";
 
 export function getStaticPaths() {
@@ -13,10 +14,7 @@ const { post } = Astro.props as { post: (typeof posts)[number] };
       <div class="vf-blog-detail-text">
         <h1 class="vf-blog-detail-title" id="article-title">{post.title}.</h1>
         <article class="vf-blog-detail-copy">
-          <h2>Material and atmosphere.</h2>
-          <p>{post.paragraphs[0]}</p>
-          <h3>The details.</h3>
-          {post.paragraphs.slice(1).map((paragraph) => <p>{paragraph}</p>)}
+          <ReferenceRichText variant="blog" />
         </article>
       </div>
       <div class="vf-blog-detail-media">

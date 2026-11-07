@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import ReferenceRichText from "@/components/astro/ReferenceRichText.astro";
 import { projects } from "@/data/projects";
 
 export function getStaticPaths() {
@@ -12,23 +13,22 @@ const { project } = Astro.props as { project: (typeof projects)[number] };
     <section class="vf-project-intro" aria-labelledby="project-title">
       <div class="vf-project-intro-content">
         <h1 class="vf-project-title" id="project-title">{project.title}.</h1>
-        <div class="vf-project-story">
-          <h2>Interior study.</h2>
-          <p>This project is part of the Von Falk portfolio. The selected photographs explore the relationship between interior architecture, furnishings, lighting and the way that materials work together.</p>
-          <p>Each view places attention on the details that make up the interior. From larger architectural elements to smaller pieces, these images document the choices that contribute to the overall composition.</p>
-        </div>
       </div>
+      <article class="vf-project-story" aria-label="Project description">
+        <ReferenceRichText variant="project" />
+      </article>
       <aside class="vf-project-aside" aria-label="Project information">
         <h2>Services</h2>
         <ul>{project.services.map((service) => <li>{service}.</li>)}</ul>
         <div class="vf-project-desktop-meta">
-          <h2>Project information</h2>
-          <p>{project.city}.</p>
-          <p>{project.year}</p>
+          <h2>In collaboration with</h2>
+          <p>Agency A, Company B</p>
+          <p class="vf-project-year">{project.year}</p>
         </div>
         <details class="vf-project-mobile-details">
           <summary>More details <span aria-hidden="true">●</span></summary>
-          <p>{project.city}. {project.year}.</p>
+          <p>In collaboration with Agency A, Company B. {project.year}.</p>
+          <ReferenceRichText variant="project" />
         </details>
       </aside>
     </section>

@@ -411,3 +411,35 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-contact-page .vf-form-image { max-width: 130px; }
   .vf-contact-page .vf-two-column { margin-top: 11.625rem; }
 }
+
+/* Editorial structure follows the frozen Webflow project and journal rich text. */
+@media (min-width: 641px) {
+  .vf-project-intro {
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, .95fr) minmax(0, .78fr);
+    gap: clamp(1.5rem, 3.5vw, 5rem);
+  }
+  .vf-project-story { margin-top: 0; max-width: none; }
+  .vf-project-aside { padding-top: .2rem; }
+}
+.vf-reference-richtext { font-size: .875rem; line-height: 1.42; }
+.vf-reference-richtext h2 { font-size: 1.15rem; font-weight: 600; margin: 0 0 .6rem; }
+.vf-reference-richtext h3 { font-size: 1rem; font-weight: 600; margin: .45rem 0; }
+.vf-reference-richtext h4 { font-size: .9rem; font-weight: 600; margin: .45rem 0; }
+.vf-reference-richtext p { font-size: inherit; line-height: inherit; margin: .5rem 0; max-width: none; }
+.vf-reference-richtext ul, .vf-reference-richtext ol { padding-left: 1.35rem; margin: .5rem 0; }
+.vf-reference-richtext ul { list-style: disc; }
+.vf-reference-richtext ol { list-style: decimal; }
+.vf-reference-richtext li { padding-block: .1rem; }
+.vf-reference-richtext a { text-decoration: underline; text-underline-offset: .1em; }
+.vf-reference-richtext blockquote { margin-top: .75rem; border-left: 2px solid var(--vf-rule); padding-left: .9rem; }
+.vf-project-desktop-meta { margin-top: 2rem; }
+.vf-project-desktop-meta .vf-project-year { margin-top: 2.2rem; font-size: 1.3rem; }
+.vf-project-story h2 { font-size: 1.15rem; margin-bottom: .6rem; }
+.vf-blog-detail-copy .vf-reference-richtext h2 { font-size: 1.2rem; margin-bottom: .6rem; }
+.vf-blog-detail-copy .vf-reference-richtext h3 { font-size: 1.05rem; margin-top: .65rem; }
+.vf-blog-detail-copy .vf-reference-richtext p { margin-top: .5rem; }
+@media (max-width: 640px) {
+  .vf-project-mobile-details .vf-reference-richtext { margin-top: 1rem; font-size: .85rem; }
+  .vf-blog-detail-copy .vf-reference-richtext { font-size: .875rem; line-height: 1.4; }
+  .vf-blog-detail-copy .vf-reference-richtext h2 { font-size: 1.18rem; }
+}
