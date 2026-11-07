@@ -52,7 +52,7 @@ jobs:
           curl --fail http://127.0.0.1:4321/ > /dev/null
           CHROME="$(command -v google-chrome || command -v chromium)"
           mkdir -p visual-snapshots
-          # Legacy source HTML is removed on this conditional cleanup branch.
+          # Original Webflow export is absent from this final cleanup branch.
           routes=(
             "home|index.html|/"
             "about-us|about-us.html|/about-us"
