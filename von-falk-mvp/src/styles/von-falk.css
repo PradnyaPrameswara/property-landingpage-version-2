@@ -397,8 +397,9 @@ img { max-width: 100%; height: auto; display: block; }
 /* At narrow phone widths, the reference title wraps above the hero photo. */
 @media (max-width: 359px) {
   .vf-hero { padding-top: 11.5rem; }
-  .vf-hero-heading { max-width: 12ch; white-space: normal; font-size: 2.2rem; line-height: .98; }
-  .vf-hero-bottom { min-height: 18rem; }
+  .vf-hero-heading { max-width: 12ch; white-space: normal; font-size: 2.2rem; line-height: .98; margin-bottom: 2.15rem; }
+  .vf-hero-bottom { min-height: 18rem; margin-top: 1.7rem; }
+  .vf-hero-bottom .vf-link { height: 4rem; }
   .vf-hero-bottom p { max-width: 26ch; }
   .vf-projects-page .vf-intro { padding-top: 5.1rem; }
   .vf-contact-page .vf-form-image { max-width: 130px; }
