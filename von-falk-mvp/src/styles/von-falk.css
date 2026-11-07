@@ -338,3 +338,15 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-blog-detail-extra { order: 4; margin-top: 1.5rem; }
 }
 
+/* Snapshot-aligned refinements for project and journal detail first folds. */
+@media (min-width: 641px) {
+  .vf-blog-detail-page { padding-top: 7.5rem; }
+  .vf-blog-detail-title { max-width: 530px; }
+  .vf-project-intro { min-height: clamp(45rem, 61vw, 61rem); }
+}
+@media (max-width: 640px) {
+  .vf-blog-detail-page { padding-top: 8.8rem; }
+  .vf-blog-detail-title { max-width: 310px; }
+  .vf-project-intro { gap: 2.7rem; }
+  .vf-project-gallery { margin-top: 10rem; }
+}
