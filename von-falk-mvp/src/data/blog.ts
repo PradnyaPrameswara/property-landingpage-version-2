@@ -20,7 +20,7 @@ export const posts: BlogPost[] = [
     title: "Dry floral compositions: guide to match the interior",
     cover: coverA,
     coverAlt: "Dried botanical arrangement in a natural interior",
-    excerpt: "Dried flowers introduce sculptural shapes and quiet colour into an interior. We consider composition, natural materials and the right vessel to complement the room.",
+    excerpt: "Dried flowers and branches bring sculptural shapes and subtle colour into an interior. Thoughtful compositions can sit naturally alongside furniture, textured surfaces and light. Choosing a suitable vessel and a restrained palette keeps the arrangement in balance. Even a single stem can give a quiet corner character without overwhelming the room.",
     images: [detail2, detail3],
     paragraphs: [
       "Dried arrangements bring texture and shape to an interior without needing to compete with the surrounding materials. A few carefully selected stems can have more presence than a crowded arrangement.",

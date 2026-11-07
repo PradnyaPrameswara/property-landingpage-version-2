@@ -52,7 +52,7 @@ jobs:
           curl --fail http://127.0.0.1:4321/ > /dev/null
           CHROME="$(command -v google-chrome || command -v chromium)"
           mkdir -p visual-snapshots
-          # The legacy export has been deleted on this branch; capture every Astro route.
+          # Original HTML is removed on this cleanup branch; only capture Astro routes.
           routes=(
             "home|index.html|/"
             "about-us|about-us.html|/about-us"

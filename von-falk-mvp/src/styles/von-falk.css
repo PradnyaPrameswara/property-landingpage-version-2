@@ -269,3 +269,16 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-contact-page .vf-form .vf-submit { min-height: 34px; margin-top: .75rem; }
 }
 
+/* Correct the selector precedence of alternating editorial rows on narrow screens. */
+@media (max-width: 640px) {
+  .vf-about-page .vf-editorial-row:nth-child(even) .vf-editorial-media,
+  .vf-services-page .vf-editorial-row:nth-child(even) .vf-editorial-media { order: 2; }
+  .vf-about-page .vf-editorial-row:nth-child(even) .vf-editorial-text,
+  .vf-services-page .vf-editorial-row:nth-child(even) .vf-editorial-text { order: 1; }
+  .vf-projects-page .vf-intro, .vf-about-page .vf-intro,
+  .vf-services-page .vf-intro, .vf-contact-page .vf-intro { padding-top: 4.3rem; }
+  .vf-services-page .vf-editorial-row:first-child { margin-top: 1rem; }
+  .vf-blog-page .vf-editorial-row { margin-bottom: 9.5rem; }
+  .vf-contact-page .vf-two-column { margin-top: 10.5rem; }
+  .vf-hero + .vf-section { margin-top: 8rem; }
+}
