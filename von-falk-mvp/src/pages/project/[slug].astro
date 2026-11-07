@@ -1,20 +1,37 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { projects } from "@/data/projects";
-export function getStaticPaths() { return projects.map(p => ({ params: { slug: p.slug }, props: { project: p } })); }
-const { project } = Astro.props;
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+const { project } = Astro.props as { project: (typeof projects)[number] };
 ---
-<BaseLayout title={project.title}>
-  <div class="padding-global">
-    <div class="container-large">
-      <h1>{project.title}.</h1>
-      <p>{project.city}.</p>
-      <p>{project.year}</p>
-      <img src={project.cover} alt={project.coverAlt} />
-      {project.images.map((g: { src: string; alt: string }) => (
-        <img src={g.src} alt={g.alt} />
-      ))}
-      <details><summary>More details</summary><p>{project.year}</p><p>{project.city}.</p></details>
-    </div>
+<BaseLayout title={project.title} description={"An interior project in " + project.city + " by Von Falk."} image={project.cover}>
+  <div class="vf-container">
+    <section class="vf-intro" aria-labelledby="project-heading">
+      <div class="vf-detail-hero">
+        <div>
+          <a href="/projects" class="vf-link" style="margin-bottom:2.5rem">All projects</a>
+          <h1 class="vf-page-title" id="project-heading" style="font-size:clamp(3.25rem,8.2vw,10rem)">{project.title}.</h1>
+        </div>
+        <div>
+          <div class="vf-detail-meta"><span>Location.</span><span>{project.city}.</span></div>
+          <div class="vf-detail-meta"><span>Year.</span><span>{project.year}</span></div>
+          <details class="vf-detail-meta">
+            <summary style="cursor:pointer">More details.</summary>
+            <div class="vf-copy" style="padding-top:1rem">Selected interiors from {project.city}, completed in {project.year}.</div>
+          </details>
+        </div>
+      </div>
+      <div class="vf-detail-gallery">
+        <figure><img src={project.cover} alt={project.coverAlt} decoding="async" fetchpriority="high" width="1400" height="1100" /></figure>
+        {project.images.map((img) => (
+          <figure><img src={img.src} alt={img.alt} loading="lazy" decoding="async" width="900" height="1125" /></figure>
+        ))}
+      </div>
+      <div style="margin-top:clamp(3rem,7vw,7rem)">
+        <a class="vf-link" href="/projects">Back to projects</a>
+      </div>
+    </section>
   </div>
 </BaseLayout>

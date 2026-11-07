@@ -1,10 +1,32 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import dividerUrl from "../../assets/65e5c15136cb5752bdc91569_65afab2c82c75aa35f79f9c3_image.svg?url";
 import { posts } from "@/data/blog";
 export function getStaticPaths() {
   return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 const { post } = Astro.props as { post: (typeof posts)[number] };
 ---
-<BaseLayout title={post.title}><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h1>{post.title}.</h1><img src={post.cover} alt={post.coverAlt} /><img src={dividerUrl} alt="" aria-hidden="true" /></div></div></BaseLayout>
+<BaseLayout title={post.title} description={post.excerpt} image={post.cover}>
+  <div class="vf-container">
+    <section class="vf-intro" aria-labelledby="article-heading">
+      <div class="vf-detail-hero">
+        <div>
+          <a href="/blog" class="vf-link" style="margin-bottom:2.5rem">All articles</a>
+          <h1 class="vf-page-title" id="article-heading" style="font-size:clamp(3.25rem,7.8vw,9rem)">{post.title}.</h1>
+        </div>
+        <p class="vf-copy">{post.excerpt}</p>
+      </div>
+      <div class="vf-detail-gallery">
+        <figure><img src={post.cover} alt={post.coverAlt} decoding="async" fetchpriority="high" width="1400" height="1100" /></figure>
+        {post.images.map((img, index) => (
+          <figure><img src={img} alt={"Interior detail accompanying " + post.title + ", image " + (index + 1)} loading="lazy" decoding="async" width="900" height="1125" /></figure>
+        ))}
+      </div>
+      <div class="vf-section vf-two-column" style="align-items:start">
+        <h2 class="vf-heading">The details.</h2>
+        <div>{post.paragraphs.map((paragraph) => <p class="vf-copy" style="margin-bottom:1.5rem">{paragraph}</p>)}</div>
+      </div>
+      <a class="vf-link" href="/blog">Back to blog</a>
+    </section>
+  </div>
+</BaseLayout>
