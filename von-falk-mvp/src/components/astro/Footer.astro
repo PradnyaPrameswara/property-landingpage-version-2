@@ -1,4 +1,23 @@
 ---
 import subLogoUrl from "../../assets/65e217e648fae30a8802ff6d_sublogo.svg?url";
 ---
-<footer><div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]"><div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]"><h2>Contact.</h2><p>Kanaalstraat 116.</p><p>1054XM Amsterdam.</p><a href="mailto:info@vonfalk.nl">info@vonfalk.nl</a><a href="tel:+31640125678">+31640125678</a><img src={subLogoUrl} alt="" /><a href="/template-8igy9jfp/licenses">License</a><span>Powered by </span><a href="https://webflow.com" target="_blank" rel="noopener noreferrer">Webflow</a></div></div></footer>
+<footer class="vf-footer">
+  <div class="vf-container vf-footer-inner">
+    <div>
+      <h2 class="vf-footer-title">Contact.</h2>
+      <address>
+        Kanaalstraat 116.<br />
+        1054XM Amsterdam.<br />
+        <a href="mailto:info@vonfalk.nl">info@vonfalk.nl</a>
+        <a href="tel:+31640125678">+31 6 40125678</a>
+      </address>
+    </div>
+    <div class="vf-footer-right">
+      <img class="vf-footer-mark" src={subLogoUrl} alt="Von Falk monogram" width="260" height="260" loading="lazy" />
+      <div class="vf-footer-legal">
+        <a href="/template-8igy9jfp/licenses">Image licenses</a>
+        <span>© Von Falk</span>
+      </div>
+    </div>
+  </div>
+</footer>
