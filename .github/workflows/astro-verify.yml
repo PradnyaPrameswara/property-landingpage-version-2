@@ -137,6 +137,27 @@ jobs:
             done
           done
           test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 88
+          # Explicitly verify the original Webflow breakpoints on two representative detail pages.
+          for spec in "project-niewuwndijk|project/niewuwndijk.html|/project/niewuwndijk" \
+                      "blog-dry-floral|blog/dry-floral-compositions-guide-to-match-the-interior.html|/blog/dry-floral-compositions-guide-to-match-the-interior"; do
+            IFS='|' read -r route reference_path astro_path <<< "$spec"
+            for viewport in "767,1000" "768,1000" "991,1000" "992,1000"; do
+              label="${viewport%%,*}"
+              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
+                --force-device-scale-factor=1 --virtual-time-budget=6000 \
+                --window-size="$viewport" \
+                --screenshot="visual-snapshots/$route-$label.png" \
+                "http://127.0.0.1:4321$astro_path"
+              test -s "visual-snapshots/$route-$label.png"
+              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
+                --force-device-scale-factor=1 --virtual-time-budget=4000 \
+                --window-size="$viewport" \
+                --screenshot="visual-snapshots/reference-$route-$label.png" \
+                "http://127.0.0.1:4322/$reference_path"
+              test -s "visual-snapshots/reference-$route-$label.png"
+            done
+          done
+          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 104
       - name: Upload page snapshots
         uses: actions/upload-artifact@v4
         with:
