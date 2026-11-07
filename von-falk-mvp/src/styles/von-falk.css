@@ -415,10 +415,11 @@ img { max-width: 100%; height: auto; display: block; }
 /* Editorial structure follows the frozen Webflow project and journal rich text. */
 @media (min-width: 641px) {
   .vf-project-intro {
-    grid-template-columns: minmax(0, 1.04fr) minmax(0, .95fr) minmax(0, .78fr);
-    gap: clamp(1.5rem, 3.5vw, 5rem);
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr);
+    gap: clamp(4rem, 8vw, 10rem);
   }
-  .vf-project-story { margin-top: 0; max-width: none; }
+  .vf-project-intro-content { min-width: 0; }
+  .vf-project-story { margin-top: clamp(1.9rem, 2.6vw, 2.9rem); max-width: 34rem; }
   .vf-project-aside { padding-top: .2rem; }
 }
 .vf-reference-richtext { font-size: .875rem; line-height: 1.42; }
@@ -442,4 +443,22 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-project-mobile-details .vf-reference-richtext { margin-top: 1rem; font-size: .85rem; }
   .vf-blog-detail-copy .vf-reference-richtext { font-size: .875rem; line-height: 1.4; }
   .vf-blog-detail-copy .vf-reference-richtext h2 { font-size: 1.18rem; }
+}
+
+/* Screenshot-matched editorial first folds; original static export is the content authority. */
+@media (min-width: 641px) {
+  .vf-project-title { font-size: clamp(3.5rem, 5.25vw, 6.2rem); line-height: 1.02; }
+  .vf-blog-detail-title { font-size: clamp(3.6rem, 5.9vw, 7rem); line-height: .97; }
+  .vf-blog-detail-copy { margin-top: clamp(2.5rem, 5.5vw, 6rem); }
+  .vf-about-page { padding-inline: clamp(1.5rem, 2.8vw, 3rem); }
+  .vf-about-page .vf-editorial-row { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); }
+  .vf-about-page .vf-editorial-row:first-child { margin-top: clamp(1rem, 2.5vw, 2.5rem); }
+}
+.vf-reference-richtext { font-size: .94rem; line-height: 1.4; }
+.vf-reference-richtext p, .vf-reference-richtext li { text-align: justify; }
+@media (max-width: 640px) {
+  .vf-blog-detail-title { font-size: clamp(2.25rem, 11.3vw, 3rem); line-height: 1.02; }
+  .vf-blog-detail-copy .vf-reference-richtext { font-size: .94rem; line-height: 1.43; }
+  .vf-about-page .vf-editorial-row:first-child { margin-top: .9rem; }
+  .vf-about-page .vf-editorial-row, .vf-services-page .vf-editorial-row { margin-bottom: 11rem; }
 }

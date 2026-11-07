@@ -13,10 +13,10 @@ const { project } = Astro.props as { project: (typeof projects)[number] };
     <section class="vf-project-intro" aria-labelledby="project-title">
       <div class="vf-project-intro-content">
         <h1 class="vf-project-title" id="project-title">{project.title}.</h1>
+        <article class="vf-project-story" aria-label="Project description">
+          <ReferenceRichText variant="project" />
+        </article>
       </div>
-      <article class="vf-project-story" aria-label="Project description">
-        <ReferenceRichText variant="project" />
-      </article>
       <aside class="vf-project-aside" aria-label="Project information">
         <h2>Services</h2>
         <ul>{project.services.map((service) => <li>{service}.</li>)}</ul>
