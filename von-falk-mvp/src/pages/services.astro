@@ -12,13 +12,13 @@ const descriptions = [
 ];
 ---
 <BaseLayout title="Services" description="Interior design, spatial planning, furniture, art, lighting, project management and installation services.">
-  <div class="vf-container">
+  <div class="vf-container vf-services-page">
     <header class="vf-intro"><h1 class="vf-page-title">Services.</h1></header>
     <div class="vf-editorial">
       {services.map((service, index) => (
         <section class="vf-editorial-row reveal" aria-labelledby={"service-" + index}>
           <div class="vf-editorial-media">
-            <img src={service.image} alt={service.imageAlt} loading="lazy" decoding="async" width="900" height="1125" />
+            <img src={service.image} alt={service.imageAlt} loading={index === 0 ? "eager" : "lazy"} decoding="async" width="900" height="1125" />
           </div>
           <div class="vf-editorial-text">
             <span class="vf-kicker" style="margin-bottom:1rem">{String(index + 1).padStart(2, "0")}</span>

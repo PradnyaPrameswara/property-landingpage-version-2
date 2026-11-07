@@ -5,7 +5,7 @@ const { project } = Astro.props;
 ---
 <a class="vf-project-card" href={"/project/" + project.slug} aria-label={"View " + project.title + " project"}>
   <div class="vf-project-card-media">
-    <img src={project.cover} alt={project.coverAlt} loading="lazy" decoding="async" width="900" height="1125" />
+    <img src={project.cover} alt={project.coverAlt} loading="eager" decoding="async" width="900" height="1125" />
   </div>
   <div class="vf-project-card-caption">
     <span>{project.title}.</span>

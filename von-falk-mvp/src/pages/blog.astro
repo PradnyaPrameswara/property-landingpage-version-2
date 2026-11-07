@@ -3,13 +3,13 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { posts } from "@/data/blog";
 ---
 <BaseLayout title="Blog" description="Stories, materials and perspectives from Von Falk.">
-  <div class="vf-container">
+  <div class="vf-container vf-blog-page">
     <header class="vf-intro"><h1 class="vf-page-title">Blog.</h1></header>
     <section class="vf-editorial" aria-label="Journal articles">
-      {posts.map((post) => (
+      {posts.map((post, index) => (
         <article class="vf-editorial-row reveal">
           <a href={"/blog/" + post.slug} class="vf-editorial-media" aria-label={"Read " + post.title}>
-            <img src={post.cover} alt={post.coverAlt} loading="lazy" decoding="async" width="900" height="1125" />
+            <img src={post.cover} alt={post.coverAlt} loading={index === 0 ? "eager" : "lazy"} decoding="async" width="900" height="1125" />
           </a>
           <div class="vf-editorial-text">
             <h2><a href={"/blog/" + post.slug}>{post.title}.</a></h2>
