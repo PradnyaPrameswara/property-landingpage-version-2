@@ -50,6 +50,7 @@ jobs:
             sleep 1
           done
           curl --fail http://127.0.0.1:4321/ > /dev/null
+          CHROME_PATH="$(command -v google-chrome || command -v chromium)" node scripts/interaction-smoke.mjs
           python3 -m http.server 4322 --directory .. > reference.log 2>&1 &
           curl --retry 5 --retry-connrefused --retry-delay 1 --fail http://127.0.0.1:4322/index.html > /dev/null
           CHROME="$(command -v google-chrome || command -v chromium)"
