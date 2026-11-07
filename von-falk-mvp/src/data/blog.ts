@@ -1,8 +1,8 @@
 import coverA from "../assets/65b28a50f69f76ddafb94648_blog-cover-image-1.webp?url";
 import coverB from "../assets/65b3ae0d4045c37d94e4967b_blog-cover-image-2.webp?url";
 import team1 from "../assets/65b26b78d55e2546b6c1f3d4_team-image-1.webp?url";
-import detail2 from "../assets/65b28a63c60c0ad90ff10fc3_blog-post-image-3.webp?url";
-import detail3 from "../assets/65b28a632b2489e8930f47f4_blog-post-image-2.webp?url";
+import detail2 from "../assets/65b28a63c60c0ad90ff10fc3_blog-post-image-2.webp?url";
+import detail3 from "../assets/65b28a632b2489e8930f47f4_blog-post-image-3.webp?url";
 
 export interface BlogPost {
   slug: string;
