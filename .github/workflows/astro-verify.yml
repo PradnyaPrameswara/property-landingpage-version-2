@@ -50,9 +50,10 @@ jobs:
             sleep 1
           done
           curl --fail http://127.0.0.1:4321/ > /dev/null
+          CHROME_PATH="$(command -v google-chrome || command -v chromium)" node scripts/interaction-smoke.mjs
           CHROME="$(command -v google-chrome || command -v chromium)"
           mkdir -p visual-snapshots
-          # Capture all 14 Astro routes; original export remains in Git history.
+          # Capture all 14 Astro routes; reference remains in Git history.
           routes=(
             "home|index.html|/"
             "about-us|about-us.html|/about-us"
