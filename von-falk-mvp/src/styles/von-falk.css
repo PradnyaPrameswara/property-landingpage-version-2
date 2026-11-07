@@ -390,8 +390,14 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* Original site keeps a taller hero and full-size logotype through tablet widths. */
 @media (min-width: 641px) and (max-width: 1199px) {
-  .vf-hero-heading { font-size: clamp(3.4rem, 5.5vw, 4.6rem); }
+  .vf-home-page { padding-inline: 1.75rem; }
+  .vf-hero-heading { font-size: clamp(3.4rem, 5.5vw, 4.6rem); margin-bottom: 1.9rem; }
   .vf-hero-media { aspect-ratio: 1.44; }
+  .vf-hero-bottom p { max-width: 74ch; font-size: 1rem; }
+}
+@media (min-width: 641px) and (max-width: 850px) {
+  .vf-hero-bottom { min-height: 16.25rem; }
+  .vf-hero-bottom .vf-link { top: auto; bottom: 0; right: .25rem; height: 4rem; }
 }
 
 /* At narrow phone widths, the reference title wraps above the hero photo. */
