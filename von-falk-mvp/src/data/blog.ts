@@ -33,7 +33,7 @@ export const posts: BlogPost[] = [
     cover: coverB,
     coverAlt: "Minimalist interior with a sculptural lamp and neutral finishes",
     excerpt: "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.",
-    images: [],
+    images: [detail2, detail3],
     paragraphs: [
       "A continuous surface can make even a compact room feel composed. Concrete-like finishes offer a restrained backdrop for furnishings, artwork and the play of natural light.",
       "Consider how the material interacts with the rest of the room. Texture, tone and the treatment of adjoining surfaces have a stronger effect than colour alone.",
@@ -45,7 +45,7 @@ export const posts: BlogPost[] = [
     cover: team1,
     coverAlt: "Portrait of Theresa Jaasma",
     excerpt: "Rorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.",
-    images: [detail2, detail3],
+    images: [],
     paragraphs: [
       "Theresa Jaasma is part of the Von Falk interior design team. Our team brings together complementary perspectives on thoughtful interiors.",
       "The studio's work is guided by a shared attention to spatial balance, material choices and details that support everyday life.",
