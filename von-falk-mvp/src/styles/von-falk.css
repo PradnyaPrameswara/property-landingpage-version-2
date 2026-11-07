@@ -142,7 +142,7 @@ img { max-width: 100%; height: auto; display: block; }
 /* Reference-driven refinements: compared against the frozen HTML at 390/1440px. */
 .vf-header { border-top: 0; }
 .vf-header-inner { min-height: 100px; }
-.vf-header-logo { width: clamp(7.5rem, 16.5vw, 15rem); }
+.vf-header-logo { width: 15rem; }
 .vf-menu-button svg { width: 2rem; height: 2rem; stroke: var(--vf-olive); stroke-width: 1.55; }
 .vf-container { padding-inline: clamp(.75rem, 2vw, 2rem); }
 .vf-page-title { font-size: clamp(4rem, 7.5vw, 6.75rem); line-height: .97; letter-spacing: -.075em; }
@@ -380,9 +380,27 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-team-card[data-index="1"] img { aspect-ratio: .93; }
   .vf-team-card h2 { margin-top: .4rem; font-size: .93rem; }
   .vf-team-card p { font-size: .88rem; }
-  .vf-license-page { padding-top: 3.5rem; }
-  .vf-license-page h1 { margin-bottom: 1.5rem; }
-  .vf-license-page h2 { margin-top: 1.5rem; }
+  .vf-license-page { padding-top: 2.5rem; }
+  .vf-license-page h1 { margin-bottom: 2rem; }
+  .vf-license-page h2 { margin-top: 2rem; }
+  .vf-license-composite { margin-top: 2.2rem; margin-bottom: 1.2rem; }
   .vf-license-content { max-width: 100%; }
 }
 
+
+/* Original site keeps a taller hero and full-size logotype through tablet widths. */
+@media (min-width: 641px) and (max-width: 1199px) {
+  .vf-hero-heading { font-size: clamp(3.4rem, 5.5vw, 4.6rem); }
+  .vf-hero-media { aspect-ratio: 1.44; }
+}
+
+/* At narrow phone widths, the reference title wraps above the hero photo. */
+@media (max-width: 359px) {
+  .vf-hero { padding-top: 11.5rem; }
+  .vf-hero-heading { max-width: 12ch; white-space: normal; font-size: 2.2rem; line-height: .98; }
+  .vf-hero-bottom { min-height: 18rem; }
+  .vf-hero-bottom p { max-width: 26ch; }
+  .vf-projects-page .vf-intro { padding-top: 5.1rem; }
+  .vf-contact-page .vf-form-image { max-width: 130px; }
+  .vf-contact-page .vf-two-column { margin-top: 11.625rem; }
+}
