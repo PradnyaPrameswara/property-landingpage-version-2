@@ -1,6 +1,8 @@
-# Von Falk Webflow — Agent Skills
+# Von Falk Astro — Agent Skills
 
-Webflow static export (`index.html`, `about-us.html`, `projects.html`, `services.html`, `team.html`, `blog.html`, `contact.html`, `project/*`, `blog/*`). CSS/JS/images via CDN. MVP: replicate layout with Astro + TypeScript + React + Shadcn UI + Tailwind (no `useEffect`, no legacy, no Radix, use Base UI alternative).
+The only maintained website application is `von-falk-mvp/`. Source files in this directory are native Astro, React, Tailwind CSS and shadcn Base UI, with no Webflow runtime, Radix, jQuery or React `useEffect`.
+
+The frozen Webflow HTML reference was removed from the default tree after migration. For design-comparison purposes it remains available in Git history at commit `1385bc25b16b8be15aa4c57297afea82969fdad9`. Do not restore old HTML/CSS/JS to the app. Historical migration notes in `docs/` are not active runtime code.
 
 ## MVP tech stack + migration workflow
 
@@ -21,7 +23,7 @@ One concern per branch, one PR per phase slice; skill chain per slice: plan → 
 - Phase 4 Hardening closure → drop `cmdk`, `output:"static"` + CSP/headers, widened ESLint.
 - Phase 5 Deploy → `npm run build`, click-through evidence, antislop gate, PR.
 
-Structure rule: export HTML frozen (never edit); fixes land in `von-falk-mvp/`. Wayfinder map: `.scratch/hardening/`.
+Structure rule: maintain only `von-falk-mvp/`; original exported HTML is retained in Git history for reference. Wayfinder map: `.scratch/hardening/`.
 
 ## Agent skills
 
