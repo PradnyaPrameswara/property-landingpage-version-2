@@ -1,11 +1,25 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro"
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import image1 from "../../assets/65b26b78d55e2546b6c1f3d4_team-image-1.webp?url";
+import image2 from "../../assets/65e5bb637c43cfb3afa4f453_project-cover-1.webp?url";
+import image3 from "../../assets/65e5bb327aafbb862b1f815c_project-image-1.webp?url";
+import image4 from "../../assets/65b0f4ad206196c4fe490811_services-image-6.webp?url";
+import image5 from "../../assets/65b28a50f69f76ddafb94648_blog-cover-image-1.webp?url";
+import image6 from "../../assets/65b0f49b13cc3a2dcfd5424e_get-in-touch-image.webp?url";
+import image7 from "../../assets/65e5bb3c355dbdde0cf724f4_project-cover-2.webp?url";
+const gallery = [image1,image2,image3,image4,image5,image6,image7];
 ---
-<BaseLayout title="License">
-  <div class="padding-global px-[var(--spacing-gutter)] max-md:px-[var(--spacing-gutter-mobile)]">
-    <div class="container-large mx-auto w-full max-w-[var(--container-vonfalk)]">
-      <h1>License.</h1>
-      <p>Imagery on this site is sourced from Pexels and used under the Pexels License.</p>
+<BaseLayout title="License" description="Image usage information for the Von Falk website.">
+  <div class="vf-container vf-license-page">
+    <h1>License</h1>
+    <p>All graphical assets in the original template are intended for use in its design. Before reusing an individual photograph, check its applicable image license.</p>
+    <h2>Pexels</h2>
+    <p>The original template credits photographic material to <a href="https://www.pexels.com/license/" rel="noopener noreferrer">Pexels</a>. Image usage is subject to the terms of its original source.</p>
+    <div class="vf-license-gallery" aria-label="Examples of imagery used in the website">
+      {gallery.map((src,index) => (
+        <img src={src} alt={"Example interior or portrait image " + (index + 1)} loading="eager" decoding="sync" width="400" height="500" />
+      ))}
     </div>
+    <p class="vf-license-note">The original Webflow asset catalogue is retained in the repository's version history for attribution research. This page does not grant rights beyond the relevant source licenses.</p>
   </div>
 </BaseLayout>

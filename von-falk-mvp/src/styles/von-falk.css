@@ -282,3 +282,87 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-contact-page .vf-two-column { margin-top: 10.5rem; }
   .vf-hero + .vf-section { margin-top: 8rem; }
 }
+
+/* Detail templates match the original split editorial geometry. */
+.vf-project-detail-page, .vf-blog-detail-page { padding-inline: clamp(1.5rem, 3vw, 3.5rem); }
+.vf-project-intro { display: grid; grid-template-columns: 1.25fr .6fr; gap: clamp(3rem, 10vw, 14rem); min-height: clamp(37rem, 53vw, 53rem); padding-top: clamp(2rem, 4vw, 4.5rem); }
+.vf-project-title { font-size: clamp(3.5rem, 7vw, 8rem); line-height: .95; letter-spacing: -.075em; font-weight: 400; }
+.vf-project-story { max-width: 42rem; margin-top: clamp(2rem, 4vw, 5rem); }
+.vf-project-story h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: .85rem; }
+.vf-project-story p { max-width: 58ch; font-size: .88rem; line-height: 1.55; margin-top: 1rem; }
+.vf-project-aside { font-size: .91rem; }
+.vf-project-aside h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: .55rem; }
+.vf-project-aside ul { margin-bottom: clamp(2rem, 4vw, 5rem); }
+.vf-project-aside li { padding: .32rem 0; border-bottom: 1px solid #b6b6b0; }
+.vf-project-desktop-meta h2 { margin-bottom: .6rem; }
+.vf-project-desktop-meta p { margin: .5rem 0; }
+.vf-project-mobile-details { display: none; }
+.vf-project-gallery { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: clamp(1rem, 2vw, 3rem); }
+.vf-project-gallery figure { min-width: 0; overflow: hidden; border-radius: 7px; }
+.vf-project-gallery img { width: 100%; aspect-ratio: 1.4; object-fit: cover; }
+.vf-blog-detail-page { padding-top: clamp(2rem, 4vw, 5rem); }
+.vf-blog-detail-columns { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(2rem, 6vw, 8rem); align-items: start; }
+.vf-blog-detail-title { font-size: clamp(3.25rem, 5.25vw, 6.5rem); line-height: .97; letter-spacing: -.075em; font-weight: 400; overflow-wrap: break-word; }
+.vf-blog-detail-copy { margin-top: clamp(2rem, 4vw, 5rem); }
+.vf-blog-detail-copy h2 { font-size: 1.45rem; font-weight: 600; margin-bottom: 1rem; }
+.vf-blog-detail-copy h3 { font-size: 1.1rem; font-weight: 600; margin-top: 1.5rem; }
+.vf-blog-detail-copy p { font-size: .93rem; line-height: 1.5; max-width: 64ch; margin-top: 1rem; }
+.vf-blog-detail-cover img, .vf-blog-detail-extra img { width: 100%; aspect-ratio: 1.42; object-fit: cover; border-radius: 6px; }
+.vf-blog-detail-extra { display: grid; gap: 1rem; margin-top: 1rem; }
+@media (max-width: 640px) {
+  .vf-project-detail-page, .vf-blog-detail-page { padding-inline: 1.5rem; }
+  .vf-project-intro { display: flex; flex-direction: column; gap: 1.5rem; min-height: 0; padding-top: 3.5rem; }
+  .vf-project-title { font-size: clamp(2.1rem, 9vw, 2.75rem); line-height: 1.05; }
+  .vf-project-story { display: none; }
+  .vf-project-aside { font-size: 1rem; }
+  .vf-project-aside h2 { font-size: 1.35rem; margin-bottom: 1rem; }
+  .vf-project-aside ul { margin-bottom: 1rem; }
+  .vf-project-aside li { padding: .35rem 0; }
+  .vf-project-desktop-meta { display: none; }
+  .vf-project-mobile-details { display: block; }
+  .vf-project-mobile-details summary { cursor: pointer; padding: .65rem 0; font-size: .875rem; list-style: none; }
+  .vf-project-mobile-details summary::-webkit-details-marker { display: none; }
+  .vf-project-mobile-details summary span { margin-left: .35rem; color: var(--vf-olive); font-size: .7rem; }
+  .vf-project-gallery { margin-top: 8rem; grid-template-columns: 1fr; gap: 1rem; }
+  .vf-project-gallery img { aspect-ratio: 1.45; }
+  .vf-blog-detail-page { padding-top: 7rem; }
+  .vf-blog-detail-columns { display: flex; flex-direction: column; gap: 0; }
+  .vf-blog-detail-text, .vf-blog-detail-media { display: contents; }
+  .vf-blog-detail-title { order: 1; font-size: clamp(2.35rem, 9vw, 3.15rem); line-height: 1.02; margin-bottom: 2.2rem; }
+  .vf-blog-detail-cover { order: 2; }
+  .vf-blog-detail-cover img { aspect-ratio: 1.42; }
+  .vf-blog-detail-copy { order: 3; margin-top: .8rem; }
+  .vf-blog-detail-copy h2 { font-size: 1.3rem; margin-bottom: .8rem; }
+  .vf-blog-detail-copy h3 { font-size: 1.05rem; }
+  .vf-blog-detail-copy p { font-size: .91rem; line-height: 1.45; }
+  .vf-blog-detail-extra { order: 4; margin-top: 1.5rem; }
+}
+
+/* Team and credits follow the original gallery rhythm without a Webflow runtime. */
+.vf-team-page { padding-inline: clamp(1.75rem, 4.7vw, 5rem); }
+.vf-team-section { margin-top: clamp(1.25rem, 2.3vw, 2.5rem); }
+.vf-team-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 2.5rem); }
+.vf-team-card { min-width: 0; }
+.vf-team-card img { display: block; width: 100%; aspect-ratio: .94; object-fit: cover; border-radius: 6px; }
+.vf-team-card h2 { font-size: .94rem; font-weight: 400; line-height: 1.3; margin-top: .6rem; letter-spacing: 0; }
+.vf-team-card p { font-size: .84rem; line-height: 1.35; }
+.vf-license-page { padding-inline: clamp(1.25rem, 2vw, 2.5rem); padding-top: clamp(2rem, 4vw, 4rem); }
+.vf-license-page h1 { font-size: clamp(3rem, 6vw, 6rem); font-weight: 400; line-height: 1; letter-spacing: -.07em; margin-bottom: 2rem; }
+.vf-license-page p { font-size: .9rem; line-height: 1.55; max-width: 72ch; }
+.vf-license-page h2 { font-size: 1.35rem; font-weight: 600; margin-block: 1.5rem .5rem; }
+.vf-license-page p a { color: var(--vf-olive); text-decoration: underline; }
+.vf-license-gallery { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: .45rem; max-width: 42rem; margin-top: 1.5rem; }
+.vf-license-gallery img { width: 100%; height: 100%; aspect-ratio: .9; object-fit: cover; }
+.vf-license-note { margin-top: 1.25rem; }
+@media (max-width: 640px) {
+  .vf-team-page { padding-inline: 1.5rem; }
+  .vf-team-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .vf-team-section { margin-top: 2rem; }
+  .vf-team-card img { aspect-ratio: 1.42; }
+  .vf-team-card[data-index="1"] img { aspect-ratio: .93; }
+  .vf-team-card h2 { margin-top: .4rem; font-size: .93rem; }
+  .vf-team-card p { font-size: .88rem; }
+  .vf-license-page { padding-top: 3.5rem; }
+  .vf-license-gallery { grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+

@@ -18,6 +18,7 @@ export interface Project {
   title: string;
   city: string;
   year: string;
+  services: string[];
   cover: string;
   coverAlt: string;
   images: { src: string; alt: string }[];
@@ -26,7 +27,8 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: "niewuwndijk",
-    title: "Niewuwndijk",
+    services: ["3D visualisation","Furniture and appliances styling"],
+    title: "Niewuwendijk",
     city: "Amsterdam",
     year: "2022",
     cover: cover1,
@@ -39,6 +41,7 @@ export const projects: Project[] = [
   },
   {
     slug: "amethiststraat",
+    services: ["3D visualisation","Art consultancy","Design concept and layout","Furniture and appliances styling","Lighting design","Procurement and installation"],
     title: "Amethiststraat",
     city: "Groningen",
     year: "2022",
@@ -54,6 +57,7 @@ export const projects: Project[] = [
   },
   {
     slug: "keizergracht",
+    services: ["3D visualisation","Design concept and layout","Lighting design"],
     title: "Eerste Jan Steenstraat",
     city: "Amsterdam",
     year: "2022",
