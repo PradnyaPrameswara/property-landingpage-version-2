@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ReferenceRichText from "@/components/astro/ReferenceRichText.astro";
+import GalleryLightbox from "@/components/react/GalleryLightbox";
 import { projects } from "@/data/projects";
 
 export function getStaticPaths() {
@@ -33,11 +34,7 @@ const { project } = Astro.props as { project: (typeof projects)[number] };
       </aside>
     </section>
     <section class="vf-project-gallery" aria-label={"Photographs of " + project.title}>
-      {project.images.map((photo, index) => (
-        <figure>
-          <img src={photo.src} alt={photo.alt} loading={index < 3 ? "eager" : "lazy"} decoding={index < 3 ? "sync" : "async"} width="900" height="700" />
-        </figure>
-      ))}
+      <GalleryLightbox photos={project.images} title={project.title} client:visible />
     </section>
     <a href="/projects" class="vf-link" style="margin-top:3rem">Back to projects</a>
   </div>
