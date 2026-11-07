@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import process from "node:process";
 import { spawn } from "node:child_process";
 import { readFile, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -41,7 +42,8 @@ try {
     const entry = pending.get(message.id);
     if (!entry) return;
     pending.delete(message.id);
-    message.error ? entry.reject(new Error(JSON.stringify(message.error))) : entry.resolve(message.result);
+    if (message.error) entry.reject(new Error(JSON.stringify(message.error)));
+    else entry.resolve(message.result);
   });
   function command(method, params = {}) {
     return new Promise((resolve, reject) => {
