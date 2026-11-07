@@ -415,11 +415,11 @@ img { max-width: 100%; height: auto; display: block; }
 /* Editorial structure follows the frozen Webflow project and journal rich text. */
 @media (min-width: 641px) {
   .vf-project-intro {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr);
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
     gap: clamp(4rem, 8vw, 10rem);
   }
   .vf-project-intro-content { min-width: 0; }
-  .vf-project-story { margin-top: clamp(1.9rem, 2.6vw, 2.9rem); max-width: 34rem; }
+  .vf-project-story { margin-top: clamp(2.5rem, 3.3vw, 3.75rem); max-width: 43rem; }
   .vf-project-aside { padding-top: .2rem; }
 }
 .vf-reference-richtext { font-size: .875rem; line-height: 1.42; }
@@ -447,7 +447,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* Screenshot-matched editorial first folds; original static export is the content authority. */
 @media (min-width: 641px) {
-  .vf-project-title { font-size: clamp(3.5rem, 5.25vw, 6.2rem); line-height: 1.02; }
+  .vf-project-title { font-size: clamp(3.5rem, 7vw, 8rem); line-height: .95; }
   .vf-blog-detail-title { font-size: clamp(3.6rem, 5.9vw, 7rem); line-height: .97; }
   .vf-blog-detail-copy { margin-top: clamp(2.5rem, 5.5vw, 6rem); }
   .vf-about-page { padding-inline: clamp(1.5rem, 2.8vw, 3rem); }
@@ -461,4 +461,14 @@ img { max-width: 100%; height: auto; display: block; }
   .vf-blog-detail-copy .vf-reference-richtext { font-size: .94rem; line-height: 1.43; }
   .vf-about-page .vf-editorial-row:first-child { margin-top: .9rem; }
   .vf-about-page .vf-editorial-row, .vf-services-page .vf-editorial-row { margin-bottom: 11rem; }
+}
+
+/* Exact media framing and text gutters in original mobile project and blog templates. */
+@media (max-width: 640px) {
+  .vf-project-detail-page, .vf-blog-detail-page { padding-inline: 1.85rem; }
+  .vf-project-title { font-size: clamp(2.15rem, 10.5vw, 3rem); line-height: 1; }
+  .vf-project-gallery { margin-top: 10.5rem; gap: 1.5rem; }
+  .vf-project-gallery img { aspect-ratio: 1.82; }
+  .vf-project-mobile-details summary span { font-size: .95rem; }
+  .vf-blog-detail-title { font-size: clamp(2.2rem, 10.4vw, 2.85rem); letter-spacing: -.085em; }
 }
