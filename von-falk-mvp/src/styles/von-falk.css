@@ -138,3 +138,113 @@ img { max-width: 100%; height: auto; display: block; }
   .reveal { animation: none; }
   .vf-project-card img { transition: none; }
 }
+
+/* Reference-driven refinements: compared against the frozen HTML at 390/1440px. */
+.vf-header { border-top: 0; }
+.vf-header-inner { min-height: 100px; }
+.vf-header-logo { width: clamp(7.5rem, 16.5vw, 15rem); }
+.vf-menu-button svg { width: 2rem; height: 2rem; stroke: var(--vf-olive); stroke-width: 1.55; }
+.vf-container { padding-inline: clamp(.75rem, 2vw, 2rem); }
+.vf-page-title { font-size: clamp(4rem, 7.5vw, 6.75rem); line-height: .97; letter-spacing: -.075em; }
+.vf-intro { padding-top: clamp(3rem, 4.8vw, 5rem); }
+.vf-intro + .vf-section { margin-top: clamp(2rem, 3vw, 3.25rem); }
+.vf-editorial { padding-top: 0; }
+.vf-editorial-row { margin-block: clamp(2rem, 4vw, 4rem) clamp(5rem, 10vw, 10rem); gap: clamp(1.5rem, 5vw, 6rem); }
+.vf-editorial-media img { aspect-ratio: 3/2; border-radius: 7px; }
+.vf-editorial-text { padding-top: 0; }
+.vf-editorial-text h2 { font-size: clamp(1.4rem, 2vw, 1.9rem); font-weight: 600; letter-spacing: -.012em; line-height: 1.16; margin-bottom: 1rem; }
+.vf-editorial-text p { font-size: clamp(.875rem, 1.15vw, 1.05rem); line-height: 1.4; text-align: justify; }
+.vf-hero { padding-top: 0; }
+.vf-hero-heading { max-width: none; margin: 0 auto 1.6rem; text-align: center; font-size: clamp(3.1rem, 4.8vw, 5rem); line-height: 1; letter-spacing: -.07em; }
+.vf-hero-media { width: 100%; max-width: 1280px; aspect-ratio: 16/9; border-radius: 7px; margin-inline: auto; }
+.vf-hero-bottom { width: min(100%, 1280px); margin: 1.5rem auto 0; justify-content: center; position: relative; }
+.vf-hero-bottom p { max-width: 61ch; font-size: clamp(.9rem, 1.2vw, 1.1rem); line-height: 1.35; }
+.vf-hero-bottom .vf-link { position: absolute; right: -.5rem; top: 0; width: 1px; height: 5.5rem; font-size: 0; border-right: 1px solid var(--vf-olive); }
+.vf-hero-bottom .vf-link::after { content: "↓"; position: absolute; font-size: 1rem; right: -.38rem; bottom: -.55rem; }
+.vf-projects-page { padding-inline: clamp(1.8rem, 4.8vw, 4.5rem); }
+.vf-projects-page .vf-intro + .vf-section { margin-top: clamp(2rem, 3vw, 3rem); }
+.vf-project-card img { aspect-ratio: .92; border-radius: 7px; }
+.vf-project-card-caption { display: block; margin-top: .55rem; color: #4c4c4c; font-size: .92rem; line-height: 1.35; }
+.vf-project-card-caption span { display: block; }
+.vf-project-card-caption span:last-child { color: inherit; }
+.vf-about-page { padding-inline: clamp(1.8rem, 4.4vw, 4.25rem); }
+.vf-about-page .vf-editorial-row { grid-template-columns: 1.75fr 1fr; align-items: end; }
+.vf-about-page .vf-editorial-row:nth-child(even) .vf-editorial-media { order: 0; }
+.vf-about-page .vf-editorial-row:nth-child(even) .vf-editorial-text { order: 0; }
+.vf-about-page .vf-editorial-row .vf-editorial-text { padding-bottom: clamp(0rem, 2vw, 2rem); }
+.vf-services-page, .vf-contact-page { padding-inline: clamp(1.8rem, 2vw, 2rem); }
+.vf-services-page .vf-editorial-row { grid-template-columns: 2.12fr 1fr; gap: clamp(1.5rem, 2vw, 2rem); align-items: start; }
+.vf-services-page .vf-editorial-media img { aspect-ratio: 3/2; }
+.vf-services-page .vf-editorial-row:nth-child(even) .vf-editorial-media { order: 0; }
+.vf-services-page .vf-editorial-row:nth-child(even) .vf-editorial-text { order: 0; }
+.vf-services-page .vf-kicker { display: none; }
+.vf-blog-page .vf-editorial-row { grid-template-columns: .85fr 1.15fr; gap: clamp(4rem, 17vw, 15rem); padding-inline: clamp(1rem, 2.2vw, 2rem); align-items: start; }
+.vf-blog-page .vf-editorial-row:first-child { margin-top: clamp(6rem, 11vw, 11rem); }
+.vf-blog-page .vf-editorial-media { order: 2; }
+.vf-blog-page .vf-editorial-text { order: 1; }
+.vf-blog-page .vf-editorial-media img { aspect-ratio: 1.4; }
+.vf-blog-page .vf-editorial-text h2 { font-size: clamp(1.25rem, 1.8vw, 1.75rem); }
+.vf-blog-page .vf-editorial-text p { max-width: 43ch; }
+.vf-blog-page .vf-editorial-text .vf-link { width: 100%; justify-content: end; }
+.vf-form-layout { grid-template-columns: 1fr 1.18fr; gap: clamp(4rem, 14vw, 13rem); align-items: start; }
+.vf-form-image { width: 100%; aspect-ratio: 3/2; border-radius: 7px; }
+.vf-form { counter-reset: vf-form-row; }
+.vf-form [data-slot="field-group"] { gap: 0; }
+.vf-form .vf-form-field { display: flex; flex-direction: row; align-items: center; position: relative; gap: 1rem; min-height: 38px; padding: 0; counter-increment: vf-form-row; border-bottom: 1px solid #222; border-radius: 0; }
+.vf-form .vf-form-field::before { content: counter(vf-form-row, decimal-leading-zero) "."; font-size: .875rem; min-width: clamp(3rem, 10vw, 10rem); color: var(--vf-ink); }
+.vf-form .vf-form-field label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; margin: 0; }
+.vf-form .vf-form-field input, .vf-form .vf-form-field textarea { width: 100%; min-width: 0; min-height: 37px; padding: .25rem 0; font-size: .875rem; line-height: 1.4; }
+.vf-form .vf-form-field textarea { min-height: 76px; padding-top: .6rem; }
+.vf-form .vf-form-field input::placeholder, .vf-form .vf-form-field textarea::placeholder { color: var(--vf-ink); opacity: 1; }
+.vf-form .vf-submit { align-self: flex-end; margin-left: auto; min-height: 42px; padding: .25rem 0; }
+.vf-form .vf-submit::after { content: "●"; font-size: .9rem; }
+.vf-contact-page .vf-intro + .vf-section { margin-top: clamp(2rem, 3vw, 3rem); }
+@media (max-width: 900px) {
+  .vf-about-page .vf-editorial-row, .vf-services-page .vf-editorial-row,
+  .vf-blog-page .vf-editorial-row { grid-template-columns: 1fr; }
+  .vf-form-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .vf-header-inner { grid-template-columns: 1fr auto; min-height: 60px; }
+  .vf-header-inner > span[aria-hidden] { display: none; }
+  .vf-header-logo { justify-self: start; width: 7.6rem; }
+  .vf-header-actions { justify-content: end; }
+  .vf-menu-button { padding-right: 0; }
+  .vf-menu-button svg { width: 1.7rem; height: 1.7rem; }
+  .vf-page-title { font-size: clamp(2.55rem, 11.5vw, 3rem); line-height: 1; }
+  .vf-intro { padding-top: 5.6rem; }
+  .vf-projects-page .vf-intro, .vf-about-page .vf-intro,
+  .vf-services-page .vf-intro, .vf-contact-page .vf-intro { padding-top: 5.6rem; }
+  .vf-blog-page .vf-intro { padding-top: 2.5rem; }
+  .vf-hero { padding-top: 15rem; }
+  .vf-hero-heading { font-size: clamp(2.1rem, 10vw, 2.8rem); margin-bottom: 1.65rem; letter-spacing: -.07em; white-space: nowrap; }
+  .vf-hero-media { aspect-ratio: 1.44; }
+  .vf-hero-bottom { min-height: 17rem; flex-direction: column; align-items: center; margin-top: 1.4rem; }
+  .vf-hero-bottom p { text-align: center; max-width: 31ch; font-size: 1rem; line-height: 1.4; }
+  .vf-hero-bottom .vf-link { right: 0; top: auto; bottom: 0; height: 6rem; }
+  .vf-projects-page, .vf-about-page, .vf-services-page, .vf-contact-page { padding-inline: 1.85rem; }
+  .vf-projects-page .vf-intro + .vf-section { margin-top: 2rem; }
+  .vf-project-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .vf-project-card img { aspect-ratio: 1.4; }
+  .vf-editorial-row, .vf-about-page .vf-editorial-row, .vf-services-page .vf-editorial-row,
+  .vf-blog-page .vf-editorial-row { display: flex; flex-direction: column; gap: .65rem; margin-block: 1.75rem 7rem; }
+  .vf-about-page .vf-editorial-row .vf-editorial-media,
+  .vf-services-page .vf-editorial-row .vf-editorial-media { order: 2; }
+  .vf-about-page .vf-editorial-row .vf-editorial-text,
+  .vf-services-page .vf-editorial-row .vf-editorial-text { order: 1; padding: 0; }
+  .vf-editorial-text h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+  .vf-editorial-text p { font-size: .94rem; line-height: 1.35; }
+  .vf-editorial-media img { aspect-ratio: 1.44; }
+  .vf-blog-page .vf-editorial-row { padding-inline: 1.15rem; gap: .4rem; }
+  .vf-blog-page .vf-editorial-row:first-child { margin-top: 4rem; }
+  .vf-blog-page .vf-editorial-row .vf-editorial-media { order: 1; }
+  .vf-blog-page .vf-editorial-row .vf-editorial-text { order: 2; }
+  .vf-blog-page .vf-editorial-media img { aspect-ratio: 1.41; }
+  .vf-blog-page .vf-editorial-text h2 { font-size: 1.45rem; margin-top: .2rem; }
+  .vf-form-layout { gap: 2rem; }
+  .vf-form .vf-form-field::before { min-width: 1.2rem; }
+  .vf-form .vf-submit { min-height: 40px; }
+  .vf-contact-page .vf-intro + .vf-section { margin-top: 1.8rem; }
+  .vf-contact-page .vf-form-image { max-width: 200px; aspect-ratio: 1.5; }
+  .vf-contact-page .vf-two-column { grid-template-columns: 1fr; }
+}
