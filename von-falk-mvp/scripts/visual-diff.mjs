@@ -87,7 +87,7 @@ for(const screenshot of astro) {
 }
 results.sort((a,b)=>b.changedPercent-a.changedPercent||b.meanAbsoluteError-a.meanAbsoluteError);
 await mkdir(destination,{recursive:true});
-const limitation="Webflow's historical HTML includes inline reveal opacity/scale and remote-asset loading. Pixel scores are a triage tool, NOT a similarity percentage or proof of pixel-perfect parity.";
+const limitation="Screenshots are taken after font/image settling and frozen reference reveal normalization. Pixel scores remain triage indicators, NOT similarity percentages or proof of pixel-perfect parity; reference CDN failures and full-page motion still require review.";
 await writeFile(join(destination,"metrics.json"),JSON.stringify({pairs:results.length,threshold:"largest RGB channel delta >32",limitation,results},null,2)+"\n");
 const lines=["# First-viewport visual difference audit","",
   "Compared **"+results.length+" paired screenshots** at identical dimensions.","",
