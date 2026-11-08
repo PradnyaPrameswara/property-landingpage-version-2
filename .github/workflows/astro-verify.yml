@@ -66,120 +66,20 @@ jobs:
           path: ${{ runner.temp }}/vonfalk-original.css
           if-no-files-found: error
           retention-days: 7
-      - name: Capture browser snapshots
+      - name: Capture settled Webflow and Astro screenshots
         run: |
           npm run preview -- --host 127.0.0.1 --port 4321 > preview.log 2>&1 &
-          for i in $(seq 1 20); do
+          for i in $(seq 1 30); do
             if curl --silent --fail http://127.0.0.1:4321/ > /dev/null; then break; fi
             sleep 1
           done
           curl --fail http://127.0.0.1:4321/ > /dev/null
           CHROME_PATH="$(command -v google-chrome || command -v chromium)" node scripts/interaction-smoke.mjs
           python3 -m http.server 4322 --directory "$RUNNER_TEMP/vonfalk-original" > reference.log 2>&1 &
-          curl --retry 6 --retry-connrefused --retry-delay 1 --fail http://127.0.0.1:4322/index.html > /dev/null
-          CHROME="$(command -v google-chrome || command -v chromium)"
-          mkdir -p visual-snapshots
-          # Capture original/Astro pairs from the historical export without reintroducing legacy runtime into main.
-          routes=(
-            "home|index.html|/"
-            "about-us|about-us.html|/about-us"
-            "services|services.html|/services"
-            "projects|projects.html|/projects"
-            "team|team.html|/team"
-            "blog|blog.html|/blog"
-            "contact|contact.html|/contact"
-            "project-niewuwndijk|project/niewuwndijk.html|/project/niewuwndijk"
-            "project-amethiststraat|project/amethiststraat.html|/project/amethiststraat"
-            "project-keizergracht|project/keizergracht.html|/project/keizergracht"
-            "blog-dry-floral|blog/dry-floral-compositions-guide-to-match-the-interior.html|/blog/dry-floral-compositions-guide-to-match-the-interior"
-            "blog-concrete|blog/concrete-coating-in-interior.html|/blog/concrete-coating-in-interior"
-            "blog-theresa|blog/meet-theresa-the-new-team-member.html|/blog/meet-theresa-the-new-team-member"
-            "licenses|template-8igy9jfp/licenses.html|/template-8igy9jfp/licenses"
-          )
-          test "${#routes[@]}" -eq 14
-          for spec in "${routes[@]}"; do
-            IFS='|' read -r route reference_path astro_path <<< "$spec"
-            curl --fail --silent --show-error "http://127.0.0.1:4321$astro_path" > /dev/null
-            curl --fail --silent --show-error "http://127.0.0.1:4322/$reference_path" > /dev/null
-            for viewport in "390,1000" "1440,1000"; do
-              if [ "$viewport" = "390,1000" ]; then label=mobile; else label=desktop; fi
-              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-                --force-device-scale-factor=1 --virtual-time-budget=6000 \
-                --window-size="$viewport" \
-                --screenshot="visual-snapshots/$route-$label.png" \
-                "http://127.0.0.1:4321$astro_path"
-              test -s "visual-snapshots/$route-$label.png"
-              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-                --force-device-scale-factor=1 --virtual-time-budget=4000 \
-                --window-size="$viewport" \
-                --screenshot="visual-snapshots/reference-$route-$label.png" \
-                "http://127.0.0.1:4322/$reference_path"
-              test -s "visual-snapshots/reference-$route-$label.png"
-            done
-          done
-          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 56
-          # Wider viewport coverage for representative high-impact pages.
-          for spec in "home|index.html|/" "about-us|about-us.html|/about-us" \
-                      "projects|projects.html|/projects" "contact|contact.html|/contact"; do
-            IFS='|' read -r route reference_path astro_path <<< "$spec"
-            for viewport in "320,900" "768,1000" "1024,1000" "1920,1080"; do
-              label="${viewport%%,*}"
-              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-                --force-device-scale-factor=1 --virtual-time-budget=6000 \
-                --window-size="$viewport" \
-                --screenshot="visual-snapshots/$route-$label.png" \
-                "http://127.0.0.1:4321$astro_path"
-              test -s "visual-snapshots/$route-$label.png"
-              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-                --force-device-scale-factor=1 --virtual-time-budget=4000 \
-                --window-size="$viewport" \
-                --screenshot="visual-snapshots/reference-$route-$label.png" \
-                "http://127.0.0.1:4322/$reference_path"
-              test -s "visual-snapshots/reference-$route-$label.png"
-            done
-          done
-          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 88
-          # Explicitly verify the original Webflow breakpoints on two representative detail pages.
-          for spec in "project-niewuwndijk|project/niewuwndijk.html|/project/niewuwndijk" \
-                      "blog-dry-floral|blog/dry-floral-compositions-guide-to-match-the-interior.html|/blog/dry-floral-compositions-guide-to-match-the-interior"; do
-            IFS='|' read -r route reference_path astro_path <<< "$spec"
-            for viewport in "767,1000" "768,1000" "991,1000" "992,1000"; do
-              label="${viewport%%,*}"
-              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-                --force-device-scale-factor=1 --virtual-time-budget=6000 \
-                --window-size="$viewport" \
-                --screenshot="visual-snapshots/$route-$label.png" \
-                "http://127.0.0.1:4321$astro_path"
-              test -s "visual-snapshots/$route-$label.png"
-              "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-                --force-device-scale-factor=1 --virtual-time-budget=4000 \
-                --window-size="$viewport" \
-                --screenshot="visual-snapshots/reference-$route-$label.png" \
-                "http://127.0.0.1:4322/$reference_path"
-              test -s "visual-snapshots/reference-$route-$label.png"
-            done
-          done
-          test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 104
-          # The original CMS/editorial layout switches at 767px, so capture the 700px state too.
-          for spec in "home|index.html|/" "about-us|about-us.html|/about-us" \
-                      "projects|projects.html|/projects" "services|services.html|/services" \
-                      "team|team.html|/team" "contact|contact.html|/contact"; do
-            IFS='|' read -r route reference_path astro_path <<< "$spec"
-            viewport="700,1000"
-            "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-              --force-device-scale-factor=1 --virtual-time-budget=6000 \
-              --window-size="$viewport" \
-              --screenshot="visual-snapshots/$route-700.png" \
-              "http://127.0.0.1:4321$astro_path"
-            test -s "visual-snapshots/$route-700.png"
-            "$CHROME" --headless=new --no-sandbox --disable-dev-shm-usage --hide-scrollbars \
-              --force-device-scale-factor=1 --virtual-time-budget=4000 \
-              --window-size="$viewport" \
-              --screenshot="visual-snapshots/reference-$route-700.png" \
-              "http://127.0.0.1:4322/$reference_path"
-            test -s "visual-snapshots/reference-$route-700.png"
-          done
+          curl --retry 8 --retry-connrefused --retry-delay 1 --fail http://127.0.0.1:4322/index.html > /dev/null
+          CHROME_PATH="$(command -v google-chrome || command -v chromium)" node scripts/capture-settled.mjs
           test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 116
+          test -s visual-snapshots/capture-manifest.json
       - name: Quantify paired first-viewport screenshots
         run: node scripts/visual-diff.mjs visual-snapshots visual-audit
       - name: Upload visual difference report
