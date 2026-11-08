@@ -130,7 +130,20 @@ try {
   await eventually('!document.querySelector(".vf-lightbox-popup")', Boolean, "gallery closes");
   console.log("PASS gallery: opens, advances and closes");
 
-  for (const width of [320,390,768,1440]) {
+  for (const [width, columns] of [[390, 1], [700, 1], [767, 1], [768, 3], [1440, 3]]) {
+    await viewport(width);
+    await visit("/project/niewuwndijk");
+    await evaluate('document.querySelector(".vf-gallery-grid")?.scrollIntoView({block:"center"})');
+    await eventually('document.querySelector(".vf-gallery-trigger")?.closest("astro-island")?.hasAttribute("ssr") === false',
+      Boolean, "project gallery hydrated at " + width);
+    const positions = await evaluate('Array.from(document.querySelectorAll(".vf-gallery-grid figure")).map(el => Math.round(el.getBoundingClientRect().left))');
+    assert.equal(positions.length, 3, "Expected three photos at " + width);
+    const uniqueColumns = new Set(positions).size;
+    assert.equal(uniqueColumns, columns, "Gallery columns at " + width + "px: " + JSON.stringify(positions));
+  }
+  console.log("PASS gallery geometry: one column <=767px, three columns >=768px");
+
+  for (const width of [320,390,700,767,768,1024,1440]) {
     await viewport(width);
     for (const path of ["/","/about-us","/projects","/contact"]) {
       await visit(path);
@@ -139,7 +152,7 @@ try {
         `Overflow: ${path} at ${width}px (${layout.scrollWidth} > ${layout.innerWidth})`);
     }
   }
-  console.log("PASS responsive: no horizontal overflow on four core pages at four widths");
+  console.log("PASS responsive: no horizontal overflow on four core pages at seven widths");
 } finally {
   for (const entry of pending.values()) entry.reject(new Error("Browser closed"));
   socket?.close();
