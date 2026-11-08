@@ -228,6 +228,25 @@ try {
     }
   }
   console.log("PASS responsive: no horizontal overflow on four core pages at seven widths");
+  const routeSet = ["/","/about-us","/services","/projects","/team","/blog","/contact",
+    "/project/niewuwndijk","/project/amethiststraat","/project/keizergracht",
+    "/blog/dry-floral-compositions-guide-to-match-the-interior",
+    "/blog/concrete-coating-in-interior",
+    "/blog/meet-theresa-the-new-team-member",
+    "/template-8igy9jfp/licenses"];
+  for (const width of [390,1440]) {
+    await viewport(width);
+    for (const path of routeSet) {
+      await visit(path);
+      const qa=await evaluate('({h1:document.querySelectorAll("h1").length,main:!!document.querySelector("main"),overflow:document.documentElement.scrollWidth>innerWidth+2,missingAlt:document.querySelectorAll("img:not([alt])").length})');
+      assert.equal(qa.h1,1,"Unexpected page heading: "+path+" @"+width);
+      assert.ok(qa.main,"Missing main landmark on "+path);
+      assert.equal(qa.overflow,false,"Horizontal overflow on "+path+" @"+width);
+      assert.equal(qa.missingAlt,0,"Missing image alt on "+path);
+    }
+  }
+  console.log("PASS all 14 routes at 390 and 1440px: landmarks, image alt, and horizontal overflow");
+
 } finally {
   for (const entry of pending.values()) entry.reject(new Error("Browser closed"));
   socket?.close();

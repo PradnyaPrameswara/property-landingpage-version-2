@@ -45,6 +45,8 @@ jobs:
       - name: Check generated route count
         run: |
           test "$(find dist -type f -name index.html | wc -l)" -eq 14
+      - name: Verify built routes, images, headings and internal links
+        run: node scripts/site-qa.mjs dist
       - name: Restore historical Webflow reference
         run: |
           mkdir -p "$RUNNER_TEMP/vonfalk-original"
