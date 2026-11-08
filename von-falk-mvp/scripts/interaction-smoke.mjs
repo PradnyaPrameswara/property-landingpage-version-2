@@ -87,6 +87,9 @@ try {
   await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
     (x) => x === "true", "menu open");
   assert.equal(await evaluate('!!document.querySelector("#vf-nav a[href=\\"/contact\\"]")'), true);
+  assert.equal(await evaluate('document.documentElement.style.overflow'), "hidden", "Menu should lock background scroll");
+  assert.equal(await evaluate('document.querySelector("#vf-nav")?.getAttribute("aria-modal")'), "true");
+  await eventually('document.activeElement?.matches("#vf-nav a")', Boolean, "Focus moved into navigation");
   const mobileMenu = await evaluate('(() => { const box=document.querySelector("#vf-nav").getBoundingClientRect(); return { width:box.width, height:box.height, fontSize:parseFloat(getComputedStyle(document.querySelector("#vf-nav a")).fontSize) }; })()');
   assert.ok(mobileMenu.width >= 388 && mobileMenu.height >= 898,
     "Mobile navigation should cover the 390x1000 browser viewport: " + JSON.stringify(mobileMenu));
@@ -97,6 +100,8 @@ try {
   await evaluate('document.querySelector(".vf-menu-button").dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
   await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
     (x) => x === "false", "Escape closes menu");
+  assert.equal(await evaluate('document.documentElement.style.overflow'), "", "Escape should release scroll lock");
+  assert.equal(await evaluate('document.activeElement?.matches(".vf-menu-button")'), true, "Escape should restore trigger focus");
   console.log("PASS navigation: open, links, Escape");
   await viewport(1440);
   await visit("/");
@@ -148,12 +153,32 @@ try {
     Boolean, "project gallery hydration");
   await evaluate('document.querySelector(".vf-gallery-trigger").click()');
   await eventually('!!document.querySelector(".vf-lightbox-popup img.vf-lightbox-image")', Boolean, "gallery opens");
+  assert.ok(await evaluate('document.querySelector(".vf-lightbox-popup")?.contains(document.activeElement)'),
+    "Lightbox should contain keyboard focus");
   const firstPhoto = await evaluate('document.querySelector(".vf-lightbox-image")?.getAttribute("src")');
   await evaluate('document.querySelector("[aria-label=\\"Next photo\\"]")?.click()');
   await eventually('document.querySelector(".vf-lightbox-image")?.getAttribute("src")',
     (value) => value && value !== firstPhoto, "gallery advances");
   await evaluate('document.querySelector("[aria-label=\\"Close image viewer\\"]")?.click()');
   await eventually('!document.querySelector(".vf-lightbox-popup")', Boolean, "gallery closes");
+  await evaluate('document.querySelector(".vf-gallery-trigger").click()');
+  await eventually('!!document.querySelector(".vf-lightbox-popup")', Boolean, "lightbox keyboard open");
+  const keyboardPhoto = await evaluate('document.querySelector(".vf-lightbox-image")?.getAttribute("src")');
+  await command("Input.dispatchKeyEvent", { type: "keyDown", key: "ArrowRight", code: "ArrowRight" });
+  await command("Input.dispatchKeyEvent", { type: "keyUp", key: "ArrowRight", code: "ArrowRight" });
+  await eventually('document.querySelector(".vf-lightbox-image")?.getAttribute("src")',
+    (value) => value !== keyboardPhoto, "Right arrow navigates images");
+  await command("Input.dispatchKeyEvent", { type: "keyDown", key: "Escape", code: "Escape" });
+  await command("Input.dispatchKeyEvent", { type: "keyUp", key: "Escape", code: "Escape" });
+  await eventually('!document.querySelector(".vf-lightbox-popup")', Boolean, "Escape closes gallery");
+  console.log("PASS gallery keyboard: ArrowRight, Escape");
+  await visit("/");
+  await command("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
+  const reduced = await evaluate('({animation:getComputedStyle(document.querySelector(".reveal")).animationName,scroll:getComputedStyle(document.documentElement).scrollBehavior})');
+  assert.equal(reduced.animation, "none", "Reduced motion must suppress scroll reveal");
+  assert.equal(reduced.scroll, "auto", "Reduced motion must not force smooth scrolling");
+  await command("Emulation.setEmulatedMedia", { features: [] });
+  console.log("PASS reduced-motion preference");
   console.log("PASS gallery: opens, advances and closes");
 
   for (const [width, columns] of [[390, 1], [700, 1], [767, 1], [768, 3], [1440, 3]]) {

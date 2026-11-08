@@ -682,3 +682,13 @@ body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 
   .vf-project-gallery { margin-top: 10.5rem; }
   .vf-blog-detail-page { padding-top: 8.75rem; }
 }
+
+/* Motion parity for sticky navigation and keyboard-safe in-page anchors. */
+#featured-projects { scroll-margin-top: clamp(4rem, 7vw, 7rem); }
+.vf-menu-panel:focus-visible { outline: none; }
+@media (prefers-reduced-motion: reduce) {
+  .vf-project-card img,
+  .vf-menu-link-mark,
+  .vf-menu-panel nav a,
+  .vf-gallery-trigger img { transition: none; }
+}
