@@ -218,9 +218,9 @@ try {
   console.log("PASS first-fold visual geometry: native project cover ratios, 767px detail gutters, 700px team heading");
   await viewport(700);
   await visit("/");
-  const homeFirstFold = await evaluate('(() => { const title=document.querySelector(".vf-hero-heading"),photo=document.querySelector(".vf-hero-media"),caption=document.querySelector(".vf-hero-bottom p");return {titleFont:parseFloat(getComputedStyle(title).fontSize),photoWidth:photo.getBoundingClientRect().width,captionAlign:getComputedStyle(caption).textAlign};})()');
+  const homeFirstFold = await evaluate('(() => { const title=document.querySelector(".vf-hero-heading"),photo=document.querySelector(".vf-hero-media"),caption=document.querySelector(".vf-hero-bottom p");return {titleFont:parseFloat(getComputedStyle(title).fontSize),photoWidth:photo.getBoundingClientRect().width,clientWidth:document.documentElement.clientWidth,captionAlign:getComputedStyle(caption).textAlign};})()');
   assert.ok(Math.abs(homeFirstFold.titleFont-40)<1,"Home 700px should use Webflow 2.5rem heading: "+JSON.stringify(homeFirstFold));
-  assert.ok(homeFirstFold.photoWidth>=670 && homeFirstFold.captionAlign==="center",
+  assert.ok(homeFirstFold.photoWidth >= homeFirstFold.clientWidth - 26 && homeFirstFold.captionAlign==="center",
     "Home 700px image gutters/caption must follow Webflow: "+JSON.stringify(homeFirstFold));
   await visit("/projects");
   const projectFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-project-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width};})()');
