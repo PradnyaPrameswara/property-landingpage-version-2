@@ -216,6 +216,31 @@ try {
   assert.ok(teamFirstFold.titleSize<51 && teamFirstFold.photoTop>215,
     "Team tablet heading/photo geometry differs from Webflow first fold: "+JSON.stringify(teamFirstFold));
   console.log("PASS first-fold visual geometry: native project cover ratios, 767px detail gutters, 700px team heading");
+  await viewport(700);
+  await visit("/");
+  const homeFirstFold = await evaluate('(() => { const title=document.querySelector(".vf-hero-heading"),photo=document.querySelector(".vf-hero-media"),caption=document.querySelector(".vf-hero-bottom p");return {titleFont:parseFloat(getComputedStyle(title).fontSize),photoWidth:photo.getBoundingClientRect().width,captionAlign:getComputedStyle(caption).textAlign};})()');
+  assert.ok(Math.abs(homeFirstFold.titleFont-40)<1,"Home 700px should use Webflow 2.5rem heading: "+JSON.stringify(homeFirstFold));
+  assert.ok(homeFirstFold.photoWidth>=670 && homeFirstFold.captionAlign==="center",
+    "Home 700px image gutters/caption must follow Webflow: "+JSON.stringify(homeFirstFold));
+  await visit("/projects");
+  const projectFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-project-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width};})()');
+  assert.ok(projectFold.titleTop<195 && projectFold.imageWidth>=640,
+    "Projects 700px first fold should follow source: "+JSON.stringify(projectFold));
+  await visit("/team");
+  const teamFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-team-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width};})()');
+  assert.ok(teamFold.titleTop<195 && teamFold.imageWidth>=640,
+    "Team 700px first fold should follow source: "+JSON.stringify(teamFold));
+  await viewport(767);
+  await visit("/blog/dry-floral-compositions-guide-to-match-the-interior");
+  const blogFold = await evaluate('(() => {const title=document.querySelector(".vf-blog-detail-title").getBoundingClientRect(),cover=document.querySelector(".vf-blog-detail-cover").getBoundingClientRect();return {titleTop:title.top,coverTop:cover.top};})()');
+  assert.ok(blogFold.titleTop<200 && blogFold.coverTop<335,
+    "Blog 767px first fold must not start one heading-height too low: "+JSON.stringify(blogFold));
+  await viewport(390);
+  await visit("/projects");
+  const narrowProjectPhoto = await evaluate('document.querySelector(".vf-project-card img").getBoundingClientRect().width');
+  assert.ok(narrowProjectPhoto>345,"Projects 390px must retain narrow Webflow photo gutters");
+  console.log("PASS settled screenshot geometry: Home/Projects/Team 700px, Blog 767px, Projects 390px");
+
 
   for (const width of [320,390,700,767,768,1024,1440]) {
     await viewport(width);
