@@ -725,3 +725,24 @@ body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 
   .vf-projects-page, .vf-team-page { padding-inline: 1.125rem; }
   .vf-projects-page .vf-intro, .vf-team-page .vf-intro { padding-top: 3.5rem; }
 }
+
+/* Explicit keyboard focus without modifying pointer-state layout or brand styling. */
+.vf-menu-panel nav a:focus-visible,
+.vf-menu-button:focus-visible,
+.vf-gallery-trigger:focus-visible,
+.vf-lightbox-popup button:focus-visible,
+.vf-link:focus-visible,
+.vf-map-facade button:focus-visible,
+.vf-submit:focus-visible,
+.vf-header-logo:focus-visible,
+.vf-footer a:focus-visible {
+  outline: 3px solid #2d62ff;
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .vf-project-card img, .vf-gallery-trigger img, .vf-menu-link-mark,
+  .vf-menu-panel nav a { transition: none !important; }
+}
