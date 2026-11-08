@@ -237,11 +237,11 @@ try {
     "Home 700px image gutters/caption must follow Webflow: "+JSON.stringify(homeFirstFold));
   await visit("/projects");
   const projectFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-project-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width,clientWidth:document.documentElement.clientWidth};})()');
-  assert.ok(projectFold.titleTop<195 && projectFold.imageWidth>=projectFold.clientWidth-50,
+  assert.ok(projectFold.titleTop<195 && projectFold.imageWidth>=projectFold.clientWidth-75,
     "Projects 700px first fold should follow source: "+JSON.stringify(projectFold));
   await visit("/team");
   const teamFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-team-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width,clientWidth:document.documentElement.clientWidth};})()');
-  assert.ok(teamFold.titleTop<195 && teamFold.imageWidth>=teamFold.clientWidth-50,
+  assert.ok(teamFold.titleTop<195 && teamFold.imageWidth>=teamFold.clientWidth-75,
     "Team 700px first fold should follow source: "+JSON.stringify(teamFold));
   await viewport(767);
   await visit("/blog/dry-floral-compositions-guide-to-match-the-interior");

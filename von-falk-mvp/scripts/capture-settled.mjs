@@ -113,16 +113,22 @@ try {
         }
         const fix=document.createElement("style");
         fix.textContent="*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}";
+        // The frozen Webflow runtime can reapply inline opacity after DOM normalization.
+        // A screenshot-only important rule makes the settled reference deterministic.
+        if(isReference)fix.textContent+="[data-w-id][style]{opacity:1!important;transform:none!important}";
         document.head.append(fix);
         window.scrollTo(0,0);
         await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-        return {fontStatus:document.fonts.status,fontFaces:document.fonts.size,
+        const unsettledReveals=isReference?Array.from(document.querySelectorAll("[data-w-id][style]"))
+          .filter(node=>Number(getComputedStyle(node).opacity)<.995).length:0;
+        return {unsettledReveals,fontStatus:document.fonts.status,fontFaces:document.fonts.size,
           visibleImages:visible.length,brokenVisible:visible.filter(img=>!img.naturalWidth).map(img=>img.currentSrc),
           normalized,htmlOverflow:document.documentElement.scrollWidth>innerWidth+2,
           actualViewport:{width:innerWidth,height:innerHeight}};
       }
       const evidence=await evalJS("("+settle.toString()+")("+JSON.stringify(reference)+")");
       if(!reference&&evidence.brokenVisible.length)throw Error("Broken visible Astro images: "+JSON.stringify(evidence.brokenVisible));
+      if(reference&&evidence.unsettledReveals)throw Error("Original reveal opacity remained unsettled: "+url);
       if(evidence.fontStatus!=="loaded")throw Error("Fonts are not settled at "+url);
       if(evidence.actualViewport.width!==width||evidence.actualViewport.height!==height)
         throw Error("Unexpected viewport at "+url+": "+JSON.stringify(evidence.actualViewport));
