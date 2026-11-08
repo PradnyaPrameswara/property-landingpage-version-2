@@ -9,19 +9,48 @@ interface Link {
 export default function MobileMenu({ links, currentPath }: { links: Link[]; currentPath: string }) {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const previousOverflow = useRef("");
+
+  function closeMenu(restoreFocus = false) {
+    document.documentElement.style.overflow = previousOverflow.current;
+    setOpen(false);
+    if (restoreFocus) triggerRef.current?.focus();
+  }
+
+  function toggleMenu() {
+    if (open) {
+      closeMenu(true);
+      return;
+    }
+    previousOverflow.current = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    setOpen(true);
+    requestAnimationFrame(() => rootRef.current?.querySelector<HTMLAnchorElement>(".vf-menu-panel a")?.focus({ preventScroll: true }));
+  }
 
   return (
     <div
+      ref={rootRef}
       className="vf-menu"
       onKeyDown={(event) => {
-        if (event.key === "Escape" && open) {
+        if (!open) return;
+        if (event.key === "Escape") {
           event.stopPropagation();
-          setOpen(false);
-          triggerRef.current?.focus();
+          closeMenu(true);
         }
-      }}
-      onBlur={(event) => {
-        if (open && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+        if (event.key === "Tab") {
+          const items = Array.from(rootRef.current?.querySelectorAll<HTMLElement>("button:not([disabled]), a[href]") ?? [])
+            .filter((item) => item.getClientRects().length > 0);
+          const first = items[0], last = items[items.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+        }
       }}
     >
       <button
@@ -29,22 +58,22 @@ export default function MobileMenu({ links, currentPath }: { links: Link[]; curr
         type="button"
         className="vf-menu-button"
         aria-label={open ? "Close navigation" : "Open navigation"}
-        aria-haspopup="true"
+        aria-haspopup="dialog"
         aria-controls="vf-nav"
         aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
+        onClick={toggleMenu}
       >
         {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
       </button>
       <div
         className="vf-menu-panel"
         id="vf-nav"
+        role="dialog"
+        aria-modal={open ? "true" : undefined}
+        aria-label="Main navigation"
         hidden={!open}
         onClick={(event) => {
-          if (event.target === event.currentTarget) {
-            setOpen(false);
-            triggerRef.current?.focus();
-          }
+          if (event.target === event.currentTarget) closeMenu(true);
         }}
       >
         <nav aria-label="Main navigation">
@@ -52,11 +81,7 @@ export default function MobileMenu({ links, currentPath }: { links: Link[]; curr
             {links.map(({ href, label }) => (
               <li key={href}>
                 <span className="vf-menu-link-mark" aria-hidden="true" />
-                <a
-                  href={href}
-                  aria-current={currentPath === href ? "page" : undefined}
-                  onClick={() => setOpen(false)}
-                >
+                <a href={href} aria-current={currentPath === href ? "page" : undefined} onClick={() => closeMenu()}>
                   {label}
                 </a>
               </li>
