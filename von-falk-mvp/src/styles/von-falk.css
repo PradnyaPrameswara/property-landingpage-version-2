@@ -588,3 +588,19 @@ body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 
   .vf-footer-right { align-items: flex-start; }
   .vf-footer-legal { justify-content: flex-start; }
 }
+
+/* Original source image rules: the project grid is 460:500 on desktop.
+   Below Webflow's 768px CMS breakpoint images retain their wide mobile framing. */
+@media (min-width: 768px) {
+  .vf-gallery-grid .vf-gallery-trigger img { aspect-ratio: 460 / 500; object-fit: cover; }
+}
+@media (max-width: 767px) {
+  .vf-gallery-grid .vf-gallery-trigger img { aspect-ratio: 1.82; object-fit: cover; }
+  .vf-team-card img { aspect-ratio: 1.5; }
+  .vf-team-card[data-index="1"] img { aspect-ratio: .93; }
+}
+@media (min-width: 641px) and (max-width: 767px) {
+  .vf-contact-page .vf-form-image {
+    width: 100%; max-width: 300px; aspect-ratio: 1.5; object-fit: cover;
+  }
+}
