@@ -717,7 +717,8 @@ body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 
     line-height: 1.2;
   }
   .vf-projects-page, .vf-team-page { padding-inline: 1.5rem; }
-  .vf-projects-page .vf-intro, .vf-team-page .vf-intro { padding-top: 4.1rem; }
+  .vf-projects-page .vf-intro { padding-top: 4.1rem; }
+  .vf-team-page .vf-intro { padding-top: 5.1rem; }
   .vf-blog-detail-page { padding-top: 3.25rem; }
 }
 @media (max-width: 640px) {
