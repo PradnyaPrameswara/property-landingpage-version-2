@@ -94,7 +94,6 @@ try {
   await evaluate('document.querySelector(".vf-menu-button").dispatchEvent(new KeyboardEvent("keydown",{key:"Tab",shiftKey:true,bubbles:true,cancelable:true}))');
   assert.equal(await evaluate('document.activeElement?.matches("#vf-nav li:last-child a")'),true,
     "Shift+Tab from menu trigger should wrap focus to the last link");
-
   assert.equal(await evaluate('document.querySelector("#vf-nav")?.getAttribute("aria-modal")'), "true");
   await eventually('document.activeElement?.matches("#vf-nav a")', Boolean, "Focus moved into navigation");
   const mobileMenu = await evaluate('(() => { const box=document.querySelector("#vf-nav").getBoundingClientRect(); return { width:box.width, height:box.height, fontSize:parseFloat(getComputedStyle(document.querySelector("#vf-nav a")).fontSize) }; })()');
@@ -110,7 +109,6 @@ try {
   assert.equal(await evaluate('document.documentElement.style.overflow'), "", "Escape should release scroll lock");
   const inertAfterClose = await evaluate('({main:document.querySelector(".vf-main").inert,footer:document.querySelector(".vf-footer").inert,logo:document.querySelector(".vf-header-logo").inert})');
   assert.deepEqual(inertAfterClose,{main:false,footer:false,logo:false},"Closing navigation must restore background accessibility");
-
   assert.equal(await evaluate('document.activeElement?.matches(".vf-menu-button")'), true, "Escape should restore trigger focus");
   console.log("PASS navigation: open, links, Escape");
   await viewport(1440);
@@ -183,7 +181,6 @@ try {
   console.log("PASS gallery keyboard: ArrowRight, Escape");
   await eventually('document.activeElement?.matches(".vf-gallery-trigger")', Boolean,
     "Closing gallery restores focus to its triggering thumbnail");
-
   await visit("/");
   await command("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
   const reduced = await evaluate('({animation:getComputedStyle(document.querySelector(".reveal")).animationName,scroll:getComputedStyle(document.documentElement).scrollBehavior})');
@@ -192,7 +189,6 @@ try {
   const settledReveal = await evaluate('(() => {const style=getComputedStyle(document.querySelector(".reveal"));return {opacity:style.opacity,transform:style.transform};})()');
   assert.equal(settledReveal.opacity,"1","Reduced motion should leave reveal sections fully visible");
   assert.equal(settledReveal.transform,"none","Reduced motion should remove reveal transforms");
-
   await command("Emulation.setEmulatedMedia", { features: [] });
   console.log("PASS reduced-motion preference");
   console.log("PASS gallery: opens, advances and closes");
@@ -235,17 +231,17 @@ try {
   console.log("PASS first-fold visual geometry: native project cover ratios, 767px detail gutters, 700px team heading");
   await viewport(700);
   await visit("/");
-  const homeFirstFold = await evaluate('(() => { const title=document.querySelector(".vf-hero-heading"),photo=document.querySelector(".vf-hero-media"),caption=document.querySelector(".vf-hero-bottom p");return {titleFont:parseFloat(getComputedStyle(title).fontSize),photoWidth:photo.getBoundingClientRect().width,captionAlign:getComputedStyle(caption).textAlign};})()');
+  const homeFirstFold = await evaluate('(() => { const title=document.querySelector(".vf-hero-heading"),photo=document.querySelector(".vf-hero-media"),caption=document.querySelector(".vf-hero-bottom p");return {titleFont:parseFloat(getComputedStyle(title).fontSize),photoWidth:photo.getBoundingClientRect().width,clientWidth:document.documentElement.clientWidth,captionAlign:getComputedStyle(caption).textAlign};})()');
   assert.ok(Math.abs(homeFirstFold.titleFont-40)<1,"Home 700px should use Webflow 2.5rem heading: "+JSON.stringify(homeFirstFold));
-  assert.ok(homeFirstFold.photoWidth>=670 && homeFirstFold.captionAlign==="center",
+  assert.ok(homeFirstFold.photoWidth >= homeFirstFold.clientWidth - 26 && homeFirstFold.captionAlign==="center",
     "Home 700px image gutters/caption must follow Webflow: "+JSON.stringify(homeFirstFold));
   await visit("/projects");
-  const projectFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-project-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width};})()');
-  assert.ok(projectFold.titleTop<195 && projectFold.imageWidth>=640,
+  const projectFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-project-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width,clientWidth:document.documentElement.clientWidth};})()');
+  assert.ok(projectFold.titleTop<195 && projectFold.imageWidth>=projectFold.clientWidth-50,
     "Projects 700px first fold should follow source: "+JSON.stringify(projectFold));
   await visit("/team");
-  const teamFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-team-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width};})()');
-  assert.ok(teamFold.titleTop<195 && teamFold.imageWidth>=640,
+  const teamFold = await evaluate('(() => {const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-team-card img").getBoundingClientRect();return {titleTop:title.top,imageWidth:photo.width,clientWidth:document.documentElement.clientWidth};})()');
+  assert.ok(teamFold.titleTop<195 && teamFold.imageWidth>=teamFold.clientWidth-50,
     "Team 700px first fold should follow source: "+JSON.stringify(teamFold));
   await viewport(767);
   await visit("/blog/dry-floral-compositions-guide-to-match-the-interior");
@@ -254,8 +250,9 @@ try {
     "Blog 767px first fold must not start one heading-height too low: "+JSON.stringify(blogFold));
   await viewport(390);
   await visit("/projects");
-  const narrowProjectPhoto = await evaluate('document.querySelector(".vf-project-card img").getBoundingClientRect().width');
-  assert.ok(narrowProjectPhoto>345,"Projects 390px must retain narrow Webflow photo gutters");
+  const narrowProjectPhoto = await evaluate('({photoWidth:document.querySelector(".vf-project-card img").getBoundingClientRect().width,clientWidth:document.documentElement.clientWidth})');
+  assert.ok(narrowProjectPhoto.photoWidth>=narrowProjectPhoto.clientWidth-38,
+    "Projects 390px must retain the source's narrow image gutters: "+JSON.stringify(narrowProjectPhoto));
   console.log("PASS settled screenshot geometry: Home/Projects/Team 700px, Blog 767px, Projects 390px");
 
 
