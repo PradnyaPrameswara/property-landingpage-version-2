@@ -88,6 +88,12 @@ try {
     (x) => x === "true", "menu open");
   assert.equal(await evaluate('!!document.querySelector("#vf-nav a[href=\\"/contact\\"]")'), true);
   assert.equal(await evaluate('document.documentElement.style.overflow'), "hidden", "Menu should lock background scroll");
+  const inertOnOpen = await evaluate('({main:document.querySelector(".vf-main").inert,footer:document.querySelector(".vf-footer").inert,logo:document.querySelector(".vf-header-logo").inert})');
+  assert.deepEqual(inertOnOpen,{main:true,footer:true,logo:true},"Open navigation must keep page landmarks inert");
+  await evaluate('document.querySelector(".vf-menu-button").focus()');
+  await evaluate('document.querySelector(".vf-menu-button").dispatchEvent(new KeyboardEvent("keydown",{key:"Tab",shiftKey:true,bubbles:true,cancelable:true}))');
+  assert.equal(await evaluate('document.activeElement?.matches("#vf-nav li:last-child a")'),true,
+    "Shift+Tab from menu trigger should wrap focus to the last link");
   assert.equal(await evaluate('document.querySelector("#vf-nav")?.getAttribute("aria-modal")'), "true");
   await eventually('document.activeElement?.matches("#vf-nav a")', Boolean, "Focus moved into navigation");
   const mobileMenu = await evaluate('(() => { const box=document.querySelector("#vf-nav").getBoundingClientRect(); return { width:box.width, height:box.height, fontSize:parseFloat(getComputedStyle(document.querySelector("#vf-nav a")).fontSize) }; })()');
@@ -101,6 +107,8 @@ try {
   await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
     (x) => x === "false", "Escape closes menu");
   assert.equal(await evaluate('document.documentElement.style.overflow'), "", "Escape should release scroll lock");
+  const inertAfterClose = await evaluate('({main:document.querySelector(".vf-main").inert,footer:document.querySelector(".vf-footer").inert,logo:document.querySelector(".vf-header-logo").inert})');
+  assert.deepEqual(inertAfterClose,{main:false,footer:false,logo:false},"Closing navigation must restore background accessibility");
   assert.equal(await evaluate('document.activeElement?.matches(".vf-menu-button")'), true, "Escape should restore trigger focus");
   console.log("PASS navigation: open, links, Escape");
   await viewport(1440);
@@ -171,11 +179,16 @@ try {
   await command("Input.dispatchKeyEvent", { type: "keyUp", key: "Escape", code: "Escape" });
   await eventually('!document.querySelector(".vf-lightbox-popup")', Boolean, "Escape closes gallery");
   console.log("PASS gallery keyboard: ArrowRight, Escape");
+  await eventually('document.activeElement?.matches(".vf-gallery-trigger")', Boolean,
+    "Closing gallery restores focus to its triggering thumbnail");
   await visit("/");
   await command("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
   const reduced = await evaluate('({animation:getComputedStyle(document.querySelector(".reveal")).animationName,scroll:getComputedStyle(document.documentElement).scrollBehavior})');
   assert.equal(reduced.animation, "none", "Reduced motion must suppress scroll reveal");
   assert.equal(reduced.scroll, "auto", "Reduced motion must not force smooth scrolling");
+  const settledReveal = await evaluate('(() => {const style=getComputedStyle(document.querySelector(".reveal"));return {opacity:style.opacity,transform:style.transform};})()');
+  assert.equal(settledReveal.opacity,"1","Reduced motion should leave reveal sections fully visible");
+  assert.equal(settledReveal.transform,"none","Reduced motion should remove reveal transforms");
   await command("Emulation.setEmulatedMedia", { features: [] });
   console.log("PASS reduced-motion preference");
   console.log("PASS gallery: opens, advances and closes");

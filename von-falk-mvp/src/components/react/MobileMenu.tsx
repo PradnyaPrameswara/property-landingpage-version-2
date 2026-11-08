@@ -11,9 +11,25 @@ export default function MobileMenu({ links, currentPath }: { links: Link[]; curr
   const triggerRef = useRef<HTMLButtonElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const previousOverflow = useRef("");
+  const previousInert = useRef<Array<{ element: HTMLElement; inert: boolean }>>([]);
+
+  function updateBackground(blocked: boolean) {
+    if (blocked) {
+      const background = document.querySelectorAll<HTMLElement>(
+        ".vf-main, .vf-footer, .vf-header-logo, .vf-shell > a[href='#main-content']"
+      );
+      previousInert.current = Array.from(background, (element) => ({ element, inert: element.inert }));
+      for (const { element } of previousInert.current) element.inert = true;
+    } else {
+      for (const { element, inert } of previousInert.current) element.inert = inert;
+      previousInert.current = [];
+    }
+  }
+
 
   function closeMenu(restoreFocus = false) {
     document.documentElement.style.overflow = previousOverflow.current;
+    updateBackground(false);
     setOpen(false);
     if (restoreFocus) triggerRef.current?.focus();
   }
@@ -25,6 +41,7 @@ export default function MobileMenu({ links, currentPath }: { links: Link[]; curr
     }
     previousOverflow.current = document.documentElement.style.overflow;
     document.documentElement.style.overflow = "hidden";
+    updateBackground(true);
     setOpen(true);
     requestAnimationFrame(() => rootRef.current?.querySelector<HTMLAnchorElement>(".vf-menu-panel a")?.focus({ preventScroll: true }));
   }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,12 @@ type GalleryPhoto = { src: string; alt: string };
 
 export default function GalleryLightbox({ photos, title }: { photos: GalleryPhoto[]; title: string }) {
   const [active, setActive] = useState<number | null>(null);
+  const openingThumbnail = useRef<HTMLButtonElement | null>(null);
+  function closeViewer() {
+    setActive(null);
+    requestAnimationFrame(() => requestAnimationFrame(() => openingThumbnail.current?.focus({ preventScroll: true })));
+  }
+
   if (!photos.length) return null;
   const selected = photos[active ?? 0];
 
@@ -23,7 +29,7 @@ export default function GalleryLightbox({ photos, title }: { photos: GalleryPhot
             type="button"
             className="vf-gallery-trigger"
             aria-label={`Open ${title} photo ${index + 1} of ${photos.length}`}
-            onClick={() => setActive(index)}
+            onClick={(event) => { openingThumbnail.current = event.currentTarget; setActive(index); }}
           >
             <img
               src={photo.src}
@@ -37,7 +43,7 @@ export default function GalleryLightbox({ photos, title }: { photos: GalleryPhot
         </figure>
       ))}
       </div>
-      <Dialog open={active !== null} onOpenChange={(isOpen) => { if (!isOpen) setActive(null); }}>
+      <Dialog open={active !== null} onOpenChange={(isOpen) => { if (!isOpen) closeViewer(); }}>
         <DialogContent
           className="vf-lightbox-popup"
           showCloseButton={false}
@@ -53,7 +59,7 @@ export default function GalleryLightbox({ photos, title }: { photos: GalleryPhot
             size="icon-lg"
             className="vf-lightbox-close"
             aria-label="Close image viewer"
-            onClick={() => setActive(null)}
+            onClick={closeViewer}
           >
             <X aria-hidden="true" />
           </Button>
