@@ -178,6 +178,13 @@ jobs:
             test -s "visual-snapshots/reference-$route-700.png"
           done
           test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 116
+      - name: Upload navigation interaction captures
+        uses: actions/upload-artifact@v4
+        with:
+          name: von-falk-navigation-open
+          path: von-falk-mvp/interaction-snapshots/*.png
+          if-no-files-found: error
+          retention-days: 7
       - name: Upload page snapshots
         uses: actions/upload-artifact@v4
         with:

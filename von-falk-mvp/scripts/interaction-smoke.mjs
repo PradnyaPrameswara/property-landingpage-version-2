@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import process from "node:process";
 import { spawn } from "node:child_process";
-import { readFile, mkdtemp, rm } from "node:fs/promises";
+import { readFile, mkdtemp, rm, mkdir, writeFile } from "node:fs/promises";
+import { Buffer } from "node:buffer";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
@@ -90,6 +91,9 @@ try {
   assert.ok(mobileMenu.width >= 388 && mobileMenu.height >= 898,
     "Mobile navigation should cover the 390x1000 browser viewport: " + JSON.stringify(mobileMenu));
   assert.ok(mobileMenu.fontSize >= 62, "Expected original 4rem mobile navigation labels");
+  await mkdir("interaction-snapshots", { recursive: true });
+  const mobileShot = await command("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
+  await writeFile("interaction-snapshots/menu-mobile-390.png", Buffer.from(mobileShot.data, "base64"));
   await evaluate('document.querySelector(".vf-menu-button").dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
   await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
     (x) => x === "false", "Escape closes menu");
@@ -105,6 +109,8 @@ try {
   assert.ok(desktopMenu.width >= 1438 && desktopMenu.height >= 998,
     "Desktop navigation should cover the full browser viewport: " + JSON.stringify(desktopMenu));
   assert.ok(desktopMenu.fontSize >= 102, "Expected original 6.5rem desktop navigation labels");
+  const desktopShot = await command("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
+  await writeFile("interaction-snapshots/menu-desktop-1440.png", Buffer.from(desktopShot.data, "base64"));
   await evaluate('document.querySelector(".vf-menu-button").click()');
   await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
     (x) => x === "false", "desktop navigation closed");
