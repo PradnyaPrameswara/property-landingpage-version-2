@@ -178,6 +178,15 @@ jobs:
             test -s "visual-snapshots/reference-$route-700.png"
           done
           test "$(find visual-snapshots -maxdepth 1 -name '*.png' | wc -l)" -eq 116
+      - name: Quantify paired first-viewport screenshots
+        run: node scripts/visual-diff.mjs visual-snapshots visual-audit
+      - name: Upload visual difference report
+        uses: actions/upload-artifact@v4
+        with:
+          name: von-falk-visual-audit
+          path: von-falk-mvp/visual-audit/*
+          if-no-files-found: error
+          retention-days: 7
       - name: Upload navigation interaction captures
         uses: actions/upload-artifact@v4
         with:
