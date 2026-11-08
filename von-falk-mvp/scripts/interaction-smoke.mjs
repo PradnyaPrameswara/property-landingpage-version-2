@@ -140,6 +140,10 @@ try {
     assert.equal(positions.length, 3, "Expected three photos at " + width);
     const uniqueColumns = new Set(positions).size;
     assert.equal(uniqueColumns, columns, "Gallery columns at " + width + "px: " + JSON.stringify(positions));
+    const photo = await evaluate('(() => { const box=document.querySelector(".vf-gallery-grid img").getBoundingClientRect(); return box.width / box.height; })()');
+    const referenceRatio = width <= 767 ? 1.82 : 460 / 500;
+    assert.ok(Math.abs(photo - referenceRatio) < 0.07,
+      "Incorrect project image crop at " + width + "px: " + photo + " vs " + referenceRatio);
   }
   console.log("PASS gallery geometry: one column <=767px, three columns >=768px");
 
