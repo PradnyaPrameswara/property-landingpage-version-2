@@ -173,6 +173,26 @@ try {
   }
   console.log("PASS gallery geometry: one column <=767px, three columns >=768px");
 
+  await viewport(390);
+  await visit("/projects");
+  const covers = await evaluate('Array.from(document.querySelectorAll(".vf-project-card img")).slice(0,2).map(image => {const rect=image.getBoundingClientRect();return {ratio:rect.width/rect.height,natural:image.naturalWidth/image.naturalHeight};})');
+  assert.equal(covers.length, 2, "Expected at least two project covers");
+  for(const cover of covers) {
+    assert.ok(cover.natural > 0 && Math.abs(cover.ratio-cover.natural)<.04,
+      "Mobile project cover should retain its original aspect ratio: "+JSON.stringify(cover));
+  }
+  await viewport(767);
+  await visit("/project/niewuwndijk");
+  const detail = await evaluate('(() => { const title=document.querySelector(".vf-project-title").getBoundingClientRect(),photo=document.querySelector(".vf-project-gallery").getBoundingClientRect();return {left:title.left,imageLeft:photo.left,gap:photo.top-document.querySelector(".vf-project-mobile-details").getBoundingClientRect().bottom};})()');
+  assert.ok(detail.left>=35 && detail.imageLeft>=35,"Project detail needs source 40px side gutters: "+JSON.stringify(detail));
+  assert.ok(detail.gap>130,"Project gallery should retain reference spacing below details: "+JSON.stringify(detail));
+  await viewport(700);
+  await visit("/team");
+  const teamFirstFold=await evaluate('(() => { const title=document.querySelector(".vf-page-title").getBoundingClientRect(),photo=document.querySelector(".vf-team-card img").getBoundingClientRect();return {titleSize:parseFloat(getComputedStyle(document.querySelector(".vf-page-title")).fontSize),photoTop:photo.top};})()');
+  assert.ok(teamFirstFold.titleSize<51 && teamFirstFold.photoTop>215,
+    "Team tablet heading/photo geometry differs from Webflow first fold: "+JSON.stringify(teamFirstFold));
+  console.log("PASS first-fold visual geometry: native project cover ratios, 767px detail gutters, 700px team heading");
+
   for (const width of [320,390,700,767,768,1024,1440]) {
     await viewport(width);
     for (const path of ["/","/about-us","/projects","/contact"]) {
