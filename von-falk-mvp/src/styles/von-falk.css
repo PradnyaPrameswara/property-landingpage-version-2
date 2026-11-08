@@ -653,3 +653,32 @@ body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 
 @media (prefers-reduced-motion: reduce) {
   .vf-menu-link-mark, .vf-menu-panel nav a { transition: none; }
 }
+
+/* PR #29: compare first-viewport geometry against Webflow's historical export.
+   Original project cover images have distinct native ratios on narrow screens;
+   forcing every cover to 1.4 cropped the Amethiststraat image by ~118px at 390px. */
+@media (max-width: 767px) {
+  .vf-projects-page .vf-project-card img {
+    aspect-ratio: auto;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .vf-project-detail-page,
+  .vf-blog-detail-page {
+    padding-inline: clamp(1.875rem, 5.22vw, 2.5rem);
+  }
+}
+@media (max-width: 640px) {
+  .vf-projects-page .vf-intro { padding-top: 6.05rem; }
+  .vf-team-page { padding-inline: 1.875rem; }
+}
+@media (min-width: 641px) and (max-width: 767px) {
+  .vf-projects-page .vf-intro,
+  .vf-team-page .vf-intro { padding-top: 6.75rem; }
+  .vf-projects-page .vf-page-title,
+  .vf-team-page .vf-page-title { font-size: 2.875rem; line-height: 1.05; }
+  .vf-team-section { margin-top: 2rem; }
+  .vf-project-gallery { margin-top: 10.5rem; }
+  .vf-blog-detail-page { padding-top: 8.75rem; }
+}
