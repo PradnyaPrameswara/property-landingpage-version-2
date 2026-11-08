@@ -181,8 +181,8 @@ try {
   await command("Input.dispatchKeyEvent", { type: "keyUp", key: "Escape", code: "Escape" });
   await eventually('!document.querySelector(".vf-lightbox-popup")', Boolean, "Escape closes gallery");
   console.log("PASS gallery keyboard: ArrowRight, Escape");
-  assert.ok(await evaluate('document.activeElement?.matches(".vf-gallery-trigger")'),
-    "Closing gallery should restore focus to its triggering thumbnail");
+  await eventually('document.activeElement?.matches(".vf-gallery-trigger")', Boolean,
+    "Closing gallery restores focus to its triggering thumbnail");
 
   await visit("/");
   await command("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
