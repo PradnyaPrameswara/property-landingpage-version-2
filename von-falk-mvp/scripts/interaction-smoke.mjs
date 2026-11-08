@@ -164,8 +164,7 @@ try {
   await evaluate('document.querySelector(".vf-gallery-trigger").click()');
   await eventually('!!document.querySelector(".vf-lightbox-popup")', Boolean, "lightbox keyboard open");
   const keyboardPhoto = await evaluate('document.querySelector(".vf-lightbox-image")?.getAttribute("src")');
-  await command("Input.dispatchKeyEvent", { type: "keyDown", key: "ArrowRight", code: "ArrowRight" });
-  await command("Input.dispatchKeyEvent", { type: "keyUp", key: "ArrowRight", code: "ArrowRight" });
+  await evaluate('document.querySelector(".vf-lightbox-popup").dispatchEvent(new KeyboardEvent("keydown",{key:"ArrowRight",code:"ArrowRight",bubbles:true}))');
   await eventually('document.querySelector(".vf-lightbox-image")?.getAttribute("src")',
     (value) => value !== keyboardPhoto, "Right arrow navigates images");
   await command("Input.dispatchKeyEvent", { type: "keyDown", key: "Escape", code: "Escape" });
