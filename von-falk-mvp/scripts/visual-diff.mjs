@@ -1,4 +1,6 @@
 import { readFile, readdir, mkdir, writeFile } from "node:fs/promises";
+import process from "node:process";
+import { Buffer } from "node:buffer";
 import { join, resolve } from "node:path";
 import { inflateSync } from "node:zlib";
 
