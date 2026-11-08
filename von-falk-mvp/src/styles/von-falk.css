@@ -604,3 +604,52 @@ body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 
     width: 100%; max-width: 300px; aspect-ratio: 1.5; object-fit: cover;
   }
 }
+
+/* Full-viewport Webflow navigation rewritten as native React state and CSS.
+   Source menu: 100svw by 100svh, 6.5rem desktop links, 4rem <=767px. */
+.vf-header { position: sticky; top: 0; z-index: 90; background: #fff; }
+.vf-header-logo { position: relative; z-index: 92; }
+.vf-menu { position: static; }
+.vf-menu-button { position: relative; z-index: 92; }
+.vf-menu-panel {
+  display: flex; position: fixed; inset: 0; z-index: 90;
+  width: 100vw; height: 100dvh; max-height: 100dvh;
+  padding: 4.875rem .75rem 8rem; background: #fff;
+  border: 0; border-radius: 0; box-shadow: none;
+  overflow: auto; overscroll-behavior: contain;
+  flex-direction: column; align-items: center;
+}
+.vf-menu-panel[hidden] { display: none; }
+.vf-menu-panel nav { display: block; width: max-content; max-width: 100%; }
+.vf-menu-panel nav ul { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.vf-menu-panel nav li { display: flex; align-items: center; justify-content: center; min-width: 0; }
+.vf-menu-link-mark {
+  display: block; flex: 0 0 1rem; width: 1rem; height: 1.125rem;
+  border-radius: 50%; background: var(--vf-olive);
+  margin-right: -2rem; opacity: 0; transition: opacity .2s ease-in-out;
+}
+.vf-menu-panel nav a {
+  display: block; color: var(--vf-ink); background: #fff;
+  font-family: 'Noto Serif', Georgia, serif; font-weight: 400;
+  font-size: 6.5rem; letter-spacing: -.5rem; line-height: .5;
+  margin: 1.35rem 0 .25rem -2rem; padding: 0 0 1.1rem 2rem;
+  border: 0; text-decoration: none; white-space: nowrap;
+  transition: margin-left .2s ease-in-out;
+}
+.vf-menu-panel nav li:hover a,
+.vf-menu-panel nav li:focus-within a,
+.vf-menu-panel nav a[aria-current="page"] { margin-left: 0; color: var(--vf-ink); }
+.vf-menu-panel nav li:hover .vf-menu-link-mark,
+.vf-menu-panel nav li:focus-within .vf-menu-link-mark,
+.vf-menu-panel nav li:has(a[aria-current="page"]) .vf-menu-link-mark { opacity: 1; }
+.vf-menu-panel nav a:hover { color: var(--vf-ink); }
+@media (max-width: 767px) {
+  .vf-menu-panel { padding-top: 5rem; }
+  .vf-menu-panel nav a {
+    font-size: 4rem; letter-spacing: -.3rem;
+    margin-top: .55rem; margin-bottom: .55rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vf-menu-link-mark, .vf-menu-panel nav a { transition: none; }
+}

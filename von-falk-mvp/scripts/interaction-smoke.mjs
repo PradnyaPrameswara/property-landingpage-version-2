@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import process from "node:process";
 import { spawn } from "node:child_process";
-import { readFile, mkdtemp, rm } from "node:fs/promises";
+import { readFile, mkdtemp, rm, mkdir, writeFile } from "node:fs/promises";
+import { Buffer } from "node:buffer";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
@@ -86,10 +87,35 @@ try {
   await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
     (x) => x === "true", "menu open");
   assert.equal(await evaluate('!!document.querySelector("#vf-nav a[href=\\"/contact\\"]")'), true);
+  const mobileMenu = await evaluate('(() => { const box=document.querySelector("#vf-nav").getBoundingClientRect(); return { width:box.width, height:box.height, fontSize:parseFloat(getComputedStyle(document.querySelector("#vf-nav a")).fontSize) }; })()');
+  assert.ok(mobileMenu.width >= 388 && mobileMenu.height >= 898,
+    "Mobile navigation should cover the 390x1000 browser viewport: " + JSON.stringify(mobileMenu));
+  assert.ok(mobileMenu.fontSize >= 62, "Expected original 4rem mobile navigation labels");
+  await mkdir("interaction-snapshots", { recursive: true });
+  const mobileShot = await command("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
+  await writeFile("interaction-snapshots/menu-mobile-390.png", Buffer.from(mobileShot.data, "base64"));
   await evaluate('document.querySelector(".vf-menu-button").dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
   await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
     (x) => x === "false", "Escape closes menu");
   console.log("PASS navigation: open, links, Escape");
+  await viewport(1440);
+  await visit("/");
+  await eventually('document.querySelector(".vf-menu-button")?.closest("astro-island")?.hasAttribute("ssr") === false',
+    Boolean, "desktop navigation hydration");
+  await evaluate('document.querySelector(".vf-menu-button").click()');
+  await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
+    (x) => x === "true", "desktop navigation open");
+  const desktopMenu = await evaluate('(() => { const box=document.querySelector("#vf-nav").getBoundingClientRect(); return { width:box.width, height:box.height, fontSize:parseFloat(getComputedStyle(document.querySelector("#vf-nav a")).fontSize) }; })()');
+  assert.ok(desktopMenu.width >= 1438 && desktopMenu.height >= 998,
+    "Desktop navigation should cover the full browser viewport: " + JSON.stringify(desktopMenu));
+  assert.ok(desktopMenu.fontSize >= 102, "Expected original 6.5rem desktop navigation labels");
+  const desktopShot = await command("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
+  await writeFile("interaction-snapshots/menu-desktop-1440.png", Buffer.from(desktopShot.data, "base64"));
+  await evaluate('document.querySelector(".vf-menu-button").click()');
+  await eventually('document.querySelector(".vf-menu-button")?.getAttribute("aria-expanded")',
+    (x) => x === "false", "desktop navigation closed");
+  await viewport(390);
+  console.log("PASS navigation layout: full-screen panel and source font sizes at 390/1440px");
 
   await visit("/contact");
   const formReady = 'document.querySelector("#contact-about")?.closest("astro-island")?.hasAttribute("ssr") === false';
