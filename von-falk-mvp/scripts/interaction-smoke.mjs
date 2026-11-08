@@ -237,8 +237,9 @@ try {
     "Blog 767px first fold must not start one heading-height too low: "+JSON.stringify(blogFold));
   await viewport(390);
   await visit("/projects");
-  const narrowProjectPhoto = await evaluate('document.querySelector(".vf-project-card img").getBoundingClientRect().width');
-  assert.ok(narrowProjectPhoto>345,"Projects 390px must retain narrow Webflow photo gutters");
+  const narrowProjectPhoto = await evaluate('({photoWidth:document.querySelector(".vf-project-card img").getBoundingClientRect().width,clientWidth:document.documentElement.clientWidth})');
+  assert.ok(narrowProjectPhoto.photoWidth>=narrowProjectPhoto.clientWidth-38,
+    "Projects 390px must retain the source's narrow image gutters: "+JSON.stringify(narrowProjectPhoto));
   console.log("PASS settled screenshot geometry: Home/Projects/Team 700px, Blog 767px, Projects 390px");
 
 
