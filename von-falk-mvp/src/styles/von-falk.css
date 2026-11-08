@@ -692,3 +692,38 @@ body:has(.vf-lightbox-popup) [data-slot="dialog-overlay"] { background: rgb(0 0 
   .vf-menu-panel nav a,
   .vf-gallery-trigger img { transition: none; }
 }
+
+/* PR #33: source-CSS values and settled screenshots, not faded reveal frames.
+   Frozen Webflow uses 1.75rem desktop gutters, 3rem <=767px page titles
+   and a 2.5rem mobile hero heading. */
+@media (min-width: 768px) {
+  .vf-projects-page .vf-page-title {
+    font-size: 6.5rem;
+    letter-spacing: -.5rem;
+    line-height: 1;
+  }
+  .vf-projects-page .vf-intro + .vf-section { margin-top: 2.25rem; }
+}
+@media (min-width: 641px) and (max-width: 767px) {
+  .vf-home-page { padding-inline: .75rem; }
+  .vf-home-page .vf-hero { padding-top: 1rem; }
+  .vf-home-page .vf-hero-heading { font-size: 2.5rem; margin-bottom: 1.9rem; }
+  .vf-home-page .vf-hero-bottom { min-height: 13.5rem; }
+  .vf-home-page .vf-hero-bottom p { max-width: 37rem; text-align: center; margin-inline: auto; }
+  .vf-home-page .vf-section-title {
+    font-size: 1.625rem;
+    letter-spacing: 0;
+    line-height: 1.2;
+  }
+  .vf-projects-page, .vf-team-page { padding-inline: 2.25rem; }
+  .vf-projects-page .vf-intro { padding-top: 6.75rem; }
+  .vf-team-page .vf-intro { padding-top: 6.6rem; }
+  .vf-blog-detail-page { padding-top: 5rem; padding-inline: 1.5rem; }
+}
+@media (max-width: 640px) {
+  .vf-projects-page { padding-inline: 1.125rem; }
+  .vf-team-page { padding-inline: 1.5rem; }
+  .vf-projects-page .vf-intro { padding-top: 3.5rem; }
+  .vf-team-page .vf-intro { padding-top: 5.1rem; }
+  .vf-blog-detail-page { padding-inline: 1.125rem; }
+}
