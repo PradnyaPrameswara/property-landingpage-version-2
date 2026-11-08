@@ -7,3 +7,5 @@ The dependency-free Chromium CDP runner in `scripts/capture-settled.mjs` now cap
 `capture-manifest.json` records font readiness, image readiness/failures, normalized reference elements and overflow. Broken visible Astro images fail the job; original CDN errors are reported without being hidden.
 
 This is a reproducible **first-viewport** comparison, not proof of full-page or live animation parity. Motion behaviors must be tested separately, and CSS/asset fidelity still requires manual review. No legacy runtime was restored to Astro.
+
+The screenshot artifact contains both PNG pairs and `capture-manifest.json`; the runner hides Chromium scrollbars on both sides to avoid contaminating pixel comparisons.

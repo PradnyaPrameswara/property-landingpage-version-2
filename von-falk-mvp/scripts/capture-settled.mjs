@@ -38,7 +38,7 @@ await mkdir(directory,{recursive:true});
 
 const profile=await mkdtemp(join(tmpdir(),"vf-visual-"));
 const chrome=spawn(chromePath,["--headless=new","--no-sandbox","--disable-dev-shm-usage",
-  "--disable-gpu","--remote-allow-origins=*","--remote-debugging-port=0",
+  "--disable-gpu","--hide-scrollbars","--remote-allow-origins=*","--remote-debugging-port=0",
   "--window-size=1440,1000","--user-data-dir="+profile,"about:blank"],{stdio:"ignore"});
 let socket;
 const pending=new Map();

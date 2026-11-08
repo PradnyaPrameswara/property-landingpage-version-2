@@ -100,6 +100,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: von-falk-browser-snapshots
-          path: von-falk-mvp/visual-snapshots/*.png
+          path: |
+            von-falk-mvp/visual-snapshots/*.png
+            von-falk-mvp/visual-snapshots/capture-manifest.json
           if-no-files-found: error
           retention-days: 7
